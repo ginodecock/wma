@@ -62,7 +62,7 @@ require('./config/passport')(passport); // pass passport for configuration
 app.get('/getWma',function(req,res) {
 	Query('SELECT * FROM wma.stamp;',function(e,data) {
 		res.json(data);
-		console.log(data.chipId);
+		console.log(data[0].chipId);
 		
 		if (!e){
 			res.render('data',{data:data});
