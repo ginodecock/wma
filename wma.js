@@ -24,8 +24,16 @@ app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser()); // get information from html forms
 
 app.set('views', path.join(__dirname , '/view'));
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 app.locals.pretty = true;
+
+// required for passport
+app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
+
+
 
 // default to a 'localhost' configuration:
 var connection_string = '127.0.0.1:27017/wma';
