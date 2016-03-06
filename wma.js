@@ -104,6 +104,8 @@ app.get('/a',function(req,res) {
 	res.end('hi')
 })
 
+// routes ======================================================================
+require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 app.listen(port,ipaddress)
 
@@ -179,3 +181,4 @@ UPDATE chipID =VALUES(chipID),email = VALUES(email),firstName = VALUES(firstName
 /*
 //{"chipId":"QZE3veFv67amb","value1":180,"value2":190,"value3":8.55}// dd
 */
+console.log('The magic happens on port ' + port);
