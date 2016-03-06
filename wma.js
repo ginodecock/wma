@@ -62,7 +62,7 @@ app.get('/',function(req,res) {
 	res.render('home')
 })
 
-app.get('/getWma',function(req,res) {
+/*app.get('/getWma',function(req,res) {
 	Query('SELECT * FROM wma.stamp;',function(e,data) {
 		console.log(data)
 		if (!e){
@@ -73,7 +73,7 @@ app.get('/getWma',function(req,res) {
 		}
 	})
 })
-
+*/
 
 app.post('/wma',function(req,res) {
 	var success = false
@@ -99,10 +99,10 @@ app.post('/wma',function(req,res) {
 
 	res.end(JSON.stringify(parsedBody,null,'\t'))
 })
-
+/*
 app.get('/a',function(req,res) {
 	res.end('hi')
-})
+})*/
 
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
