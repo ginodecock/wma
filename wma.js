@@ -60,17 +60,10 @@ mongoose.connect(connection_string);
 require('./config/passport')(passport); // pass passport for configuration
 
 app.get('/getWma',function(req,res) {
-	Query('SELECT * FROM wma.stamp;',function(e,datas) {
-		res.json(datas);
-		//console.log(data[0].chipId);
-		
+	Query('SELECT * FROM wma.stamp;',function(e,data) {
+		console.log(data);
 		if (!e){
-			
-			for (var i = 0; i < datas.length; i++) {
-    		var data = datas[i];
-    		res.render('data',{data:data.chipId});
-    		console.log(data.chipId);
-			}
+			res.render('data',{print:data})
 			//res.render('data', { print: item['data'] });
 		}
 		else{
