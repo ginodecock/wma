@@ -2,7 +2,9 @@
 <html>
     <body>
         <div>
-            <%= print %>
+            <% data.forEach(function(ind){ %>
+    <li><%= JSON.stringify(ind) %></li>
+  <% }) %>
         </div>
     </body>
 </html>
