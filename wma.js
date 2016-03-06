@@ -110,28 +110,28 @@ app.listen(port,ipaddress)
 
 
 /////////////////////////////////////////////////SQL
-var host = 'localhost'
-var user = 'wma'
-var password = 'wma'
-var db = 'wma'
+var hostsql = 'localhost'
+var usersql = 'wma'
+var passwordsql = 'wma'
+var dbsql = 'wma'
 var portsql = 3306
 
 if (process.env.OPENSHIFT_MYSQL_DB_HOST){
-	host = process.env.OPENSHIFT_MYSQL_DB_HOST
-	user = process.env.OPENSHIFT_MYSQL_DB_USERNAME
-	password = process.env.OPENSHIFT_MYSQL_DB_PASSWORD
-	db = 'wma'
+	hostsql = process.env.OPENSHIFT_MYSQL_DB_HOST
+	usersql = process.env.OPENSHIFT_MYSQL_DB_USERNAME
+	passwordsql = process.env.OPENSHIFT_MYSQL_DB_PASSWORD
+	dbsql = 'wma'
 	portsql = process.env.OPENSHIFT_MYSQL_DB_PORT
 
 }
 
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
-  portsql : port,
-  host     : host,
-  user     : user,
-  password : password,
-  database : db
+  port : portsql,
+  host     : hostsql,
+  user     : usersql,
+  password : passwordsql,
+  databases : dbsql
 });
  
 connection.connect();
