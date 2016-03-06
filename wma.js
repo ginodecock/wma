@@ -3,7 +3,7 @@ var bodyParser = require('body-parser')
 var path = require('path')
 var mysql = require('mysql')
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP;
-var port = process.env.OPENSHIFT_NODEJS_PORT || 7800;
+var port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 console.log (port);
 if (typeof ipaddress === "undefined") {ipaddress = "localhost"};
 console.log (ipaddress);
