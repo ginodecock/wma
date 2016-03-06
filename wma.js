@@ -58,9 +58,9 @@ db.books.find({}).limit(10).forEach(function(err, doc) {
 
 mongoose.connect(connection_string);
 
-app.get('/',function(req,res) {
-	res.render('home')
-})
+//app.get('/',function(req,res) {
+//	res.render('home')
+//})
 
 //app.get('/getWma',function(req,res) {
 //	Query('SELECT * FROM wma.stamp;',function(e,data) {
