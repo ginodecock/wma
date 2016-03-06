@@ -44,6 +44,7 @@ db.books.find({}).limit(10).forEach(function(err, doc) {
   if (doc) { console.dir(doc); }
 });
 
+mongoose.connect(connection_string);
 
 app.get('/',function(req,res) {
 	res.render('home')
