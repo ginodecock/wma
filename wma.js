@@ -62,17 +62,17 @@ app.get('/',function(req,res) {
 	res.render('home')
 })
 
-app.get('/getWma',function(req,res) {
-	Query('SELECT * FROM wma.stamp;',function(e,data) {
-		console.log(data)
-		if (!e){
-			res.render('wma',{input:data})
-		}
-		else{
-			res.end('error')
-		}
-	})
-})
+//app.get('/getWma',function(req,res) {
+//	Query('SELECT * FROM wma.stamp;',function(e,data) {
+//		console.log(data)
+//		if (!e){
+//			res.render('wma',{input:data})
+//		}
+//		else{
+//			res.end('error')
+//		}
+//	})
+//})
 
 app.post('/wma',function(req,res) {
 	var success = false
@@ -114,20 +114,20 @@ var host = 'localhost'
 var user = 'wma'
 var password = 'wma'
 var db = 'wma'
-var port = 3306
+var portsql = 3306
 
 if (process.env.OPENSHIFT_MYSQL_DB_HOST){
 	host = process.env.OPENSHIFT_MYSQL_DB_HOST
 	user = process.env.OPENSHIFT_MYSQL_DB_USERNAME
 	password = process.env.OPENSHIFT_MYSQL_DB_PASSWORD
 	db = 'wma'
-	port = process.env.OPENSHIFT_MYSQL_DB_PORT
+	portsql = process.env.OPENSHIFT_MYSQL_DB_PORT
 
 }
 
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
-  port : port,
+  portsql : port,
   host     : host,
   user     : user,
   password : password,
