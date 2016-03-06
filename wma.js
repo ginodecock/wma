@@ -57,7 +57,7 @@ db.books.find({}).limit(10).forEach(function(err, doc) {
 });
 
 mongoose.connect(connection_string);
-
+require('./config/passport')(passport); // pass passport for configuration
 //app.get('/',function(req,res) {
 //	res.render('home')
 //})
