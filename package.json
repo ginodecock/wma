@@ -1,7 +1,7 @@
 {
-  "name": "OpenShift-Sample-App",
+  "name": "wma",
   "version": "1.0.0",
-  "description": "OpenShift Sample Application",
+  "description": "Wma",
   "keywords": [
     "OpenShift",
     "Node.js",
@@ -9,8 +9,8 @@
     "openshift"
   ],
   "author": {
-    "name": "OpenShift",
-    "email": "ramr@example.org",
+    "name": "gino de cock",
+    "email": "ginodecock@skynet.be",
     "url": "http://www.openshift.com/"
   },
   "homepage": "http://www.openshift.com/",
@@ -18,18 +18,19 @@
     "type": "git",
     "url": "https://github.com/openshift/origin-server"
   },
-
   "engines": {
     "node": ">= 0.6.0",
     "npm": ">= 1.0.0"
   },
-
   "dependencies": {
-    "express": "~3.4.4"
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "jade": "^1.11.0",
+    "mysql": "^2.10.2",
+    "xml2js": "^0.4.16"
   },
   "devDependencies": {},
   "bundleDependencies": [],
-
   "private": true,
-  "main": "server.js"
+  "main": "wma.js"
 }
