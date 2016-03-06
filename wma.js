@@ -58,21 +58,19 @@ db.books.find({}).limit(10).forEach(function(err, doc) {
 
 mongoose.connect(connection_string);
 require('./config/passport')(passport); // pass passport for configuration
-//app.get('/',function(req,res) {
-//	res.render('home')
-//})
 
-//app.get('/getWma',function(req,res) {
-//	Query('SELECT * FROM wma.stamp;',function(e,data) {
-//		console.log(data)
-//		if (!e){
-//			res.render('wma',{input:data})
-//		}
-//		else{
-//			res.end('error')
-//		}
-//	})
-//})
+app.get('/getWma',function(req,res) {
+	Query('SELECT * FROM wma.stamp;',function(e,data) {
+		console.log(data)
+		if (!e){
+			//res.render('data',{input:data})
+			res.render('data', { print: item['data'] });
+		}
+		else{
+			res.end('error')
+		}
+	})
+})
 
 app.post('/wma',function(req,res) {
 	var success = false
