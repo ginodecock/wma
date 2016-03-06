@@ -63,8 +63,8 @@ app.get('/getWma',function(req,res) {
 	Query('SELECT * FROM wma.stamp;',function(e,data) {
 		console.log(data)
 		if (!e){
-			//res.render('data',{input:data})
-			res.render('data', { print: item['data'] });
+			res.render('data',{print:data})
+			//res.render('data', { print: item['data'] });
 		}
 		else{
 			res.end('error')
