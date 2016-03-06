@@ -7,6 +7,15 @@ var port = process.env.OPENSHIFT_NODEJS_PORT || 7800;
 console.log (port);
 if (typeof ipaddress === "undefined") {ipaddress = "localhost"};
 console.log (ipaddress);
+var mongoose = require('mongoose');
+var passport = require('passport');
+var flash    = require('connect-flash');
+
+var morgan       = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser   = require('body-parser');
+var session      = require('express-session');
+
 var app = express()
 app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname,'public')));
