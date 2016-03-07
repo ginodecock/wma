@@ -12,8 +12,7 @@
 <div class="container">
 
     <div class="page-header text-center">
-        <h1><span class="fa fa-anchor"></span> Profile Page</h1>
-        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+		<h1>Watermeter dashboard</h1>
     </div>
 
     <div class="row">
@@ -25,6 +24,7 @@
 
                 <% if (user.local.email) { %>
                     <p>
+						<a href="/logout" class="btn btn-default btn-sm">Logout</a><br>
                         <strong>id</strong>: <%= user._id %><br>
                         <strong>email</strong>: <%= user.local.email %><br>
                         <strong>password</strong>: <%= user.local.password %>
@@ -38,6 +38,12 @@
             </div>
         </div>
     </div>
+    <div class="row">
+		<div class="col-sm-6">
+			<a href="/getwma" class="btn btn-default">Sensor logs</a>
+		</div>
+    </div>
+
     <div class="row">
     </div>
 </div>
