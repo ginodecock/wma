@@ -19,8 +19,15 @@ module.exports = function(app, passport) {
         req.logout();
         res.redirect('/');
     });
-
     
+    var Sensorlog = require('../app/models/sensorlog');
+    app.get('/getWma',function(req,res) {
+        Sensorlog.find({}, function(err, data){
+        if (err) throw err;
+        console.log(data);
+        res.render('data',{data:data});
+        });
+    });
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================
 // =============================================================================

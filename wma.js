@@ -14,6 +14,7 @@ var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var session      = require('express-session');
+var Sensorlog = require('./app/models/sensorlog');
 
 var app = express();
 app.use(bodyParser.json());
@@ -59,14 +60,7 @@ mongoose.connect(connection_string);
 require('./config/passport')(passport); // pass passport for configuration
 //require('./app/models/sensorlog')(Sensorlog);
 
-var Sensorlog = require('./app/models/sensorlog');
-    app.get('/getWma',function(req,res) {
-        Sensorlog.find({}, function(err, data){
-        if (err) throw err;
-        console.log(data);
-        res.render('data',{data:data});
-        });
-    });
+    
 
 app.post('/wma',function(req,res) {
 	var success = false
