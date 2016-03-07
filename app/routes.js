@@ -21,7 +21,7 @@ module.exports = function(app, passport) {
     });
     
     var Sensorlog = require('../app/models/sensorlog');
-    app.get('/getWma',function(req,res) {
+    app.get('/getWma',isLoggedIn, function(req,res) {
         Sensorlog.find({}, function(err, data){
         if (err) throw err;
         console.log(data);
