@@ -19,7 +19,13 @@ module.exports = function(app, passport) {
         req.logout();
         res.redirect('/');
     });
-
+    app.get('/getWma',function(req,res) {
+        Sensorlog.find({}, function(err, data){
+        if (err) throw err;
+        console.log(data);
+        res.render('data',{data:data});
+    });
+});
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================
 // =============================================================================
@@ -87,13 +93,7 @@ module.exports = function(app, passport) {
 };
 
 
-    app.get('/getWma',function(req,res) {
-        Sensorlog.find({}, function(err, data){
-        if (err) throw err;
-        console.log(data);
-        res.render('data',{data:data});
-        });
-    });
+
 // route middleware to ensure user is logged in
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())

@@ -60,14 +60,6 @@ require('./config/passport')(passport); // pass passport for configuration
 
 var Sensorlog = require('./app/models/sensorlog');
 
-app.get('/getWma',function(req,res) {
-	Sensorlog.find({}, function(err, data){
-	if (err) throw err;
-	console.log(data);
-	res.render('data',{data:data});
-
-	});
-});
 
 app.post('/wma',function(req,res) {
 	var success = false
