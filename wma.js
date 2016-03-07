@@ -1,7 +1,6 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var path = require('path')
-var mysql = require('mysql')
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP;
 var port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 console.log (port);
@@ -59,43 +58,43 @@ db.books.find({}).limit(10).forEach(function(err, doc) {
 mongoose.connect(connection_string);
 require('./config/passport')(passport); // pass passport for configuration
 
+var Sensorlog = require('./app/models/sensorlog');
+
 app.get('/getWma',function(req,res) {
-	Query('SELECT * FROM wma.stamp;',function(e,data) {
-		console.log(data);
-		if (!e){
-			res.render('data',{data:data})
-			//res.render('data', { print: item['data'] });
-		}
-		else{
-			res.end('error')
-		}
-	})
-})
+	Sensorlog.find({}, function(err, data){
+	if (err) throw err;
+	console.log(data);
+	res.render('data',{data:data});
+
+	});
+});
 
 app.post('/wma',function(req,res) {
 	var success = false
 	var parsedBody = req.body
-
 		if (parsedBody.chipId && parsedBody.value1){
-			var chipId = parsedBody.chipId
-			var value1 = parsedBody.value1
-			var value2 = parsedBody.value2 || 0
-			var value3 = parsedBody.value3 || 0
-			var status = parsedBody.status || 'heartbeat'
-
-			var QuerySting = 
-			'INSERT INTO wma.stamp (chipID,value1,value2,value3,status) VALUES ('
-			+ mysql.escape(chipId) + ',' 
-			+ mysql.escape(value1) + ','
-			+ mysql.escape(value2) + ','
-			+ mysql.escape(value3) + ','
-			+ mysql.escape(status) + ') ON DUPLICATE KEY UPDATE chipID = VALUES(chipID),value1 = VALUES(value1),value2 = VALUES(value2),value3 = VALUES(value3),status = VALUES(status);'
-
-			Query(QuerySting,function(e,d) {console.log(e,d)})
+			var chipId = parsedBody.chipId;
+			var value1 = parsedBody.value1;
+			var value2 = parsedBody.value2 || 0;
+			var value3 = parsedBody.value3 || 0;
+			var status = parsedBody.status || 'heartbeat';
+			var currentDate = new Date();
+			var logNow = new Sensorlog({
+				sensorId: chipId,
+				value1: value1,
+				value2: value2,
+				value3: value3,
+				status: status,
+				timestamp: currentDate
+			});
+			logNow.save(function(err) {
+  				if (err) throw err;
+  				console.log('Sensorlog saved successfully!');
+			});
 		}
-
 	res.end(JSON.stringify(parsedBody,null,'\t'))
 })
+
 
 app.get('/a',function(req,res) {
 	res.end('hi')
@@ -108,72 +107,6 @@ app.listen(port,ipaddress)
 
 
 /////////////////////////////////////////////////SQL
-var hostsql = 'localhost'
-var usersql = 'wma'
-var passwordsql = 'wma'
-var dbsql = 'wma'
-var portsql = 3306
-
-if (process.env.OPENSHIFT_MYSQL_DB_HOST){
-	hostsql = process.env.OPENSHIFT_MYSQL_DB_HOST
-	usersql = process.env.OPENSHIFT_MYSQL_DB_USERNAME
-	passwordsql = process.env.OPENSHIFT_MYSQL_DB_PASSWORD
-	dbsql = 'wma'
-	portsql = process.env.OPENSHIFT_MYSQL_DB_PORT
-
-}
-
-var mysql      = require('mysql');
-var connection = mysql.createConnection({
-  port : portsql,
-  host     : hostsql,
-  user     : usersql,
-  password : passwordsql,
-  databases : dbsql
-});
- 
-connection.connect();
-connection.on('connect',function() {
-	console.log ('connected')
-})
-
-var Query = function (Query,cb){
-	cb = cb || function() {}
-		connection.query(Query,function(err,rows,fields) {
-			if (err){
-				cb(err,null)
-			}
-			else{
-				cb(null,rows,fields)
-			}
-		})
-}
-
-Query('CREATE TABLE IF NOT EXISTS wma.user ( \
-	chipId VARCHAR(50) NOT NULL PRIMARY KEY,\
-	email VARCHAR(50),\
-	firstName VARCHAR (50),\
-	lastName VARCHAR (50)\
-);',function(e,data) {console.log(e,data)})
-
-Query('CREATE TABLE IF NOT EXISTS wma.stamp (\
-	chipId VARCHAR(50) NOT NULL,\
-	value1 DOUBLE NOT NULL,\
-	value2 DOUBLE NOT NULL,\
-	value3 DOUBLE NOT NULL,\
-	status enum (\'loggen\', \'alarm\', \'rebootalert\', \'heartbeat\'),\
-	timestamp TIMESTAMP NOT NULL,\
-	id int PRIMARY KEY AUTO_INCREMENT,\
-	FOREIGN KEY (chipId) REFERENCES wma.user(chipId) ON UPDATE CASCADE ON DELETE RESTRICT\
-);',function(e,data) {console.log(e,data)})
-
-
-Query('INSERT INTO wma.user (chipID,email,firstName,lastName) VALUES \
-	(\'QZE3veFv67amb\',\'jeffrey@customBanden.be\',\'Jeffrey\',\'tuning\') \
-ON DUPLICATE KEY \
-UPDATE chipID =VALUES(chipID),email = VALUES(email),firstName = VALUES(firstName),lastName = VALUES(lastName);',function(e,data) {console.log(e,data)})
-
-
 
 /*
 //{"chipId":"QZE3veFv67amb","value1":180,"value2":190,"value3":8.55}// dd
