@@ -8,9 +8,16 @@ module.exports = function(app, passport) {
     });
 
     // PROFILE SECTION =========================
+    var Sensor = require('../app/models/sensor');
     app.get('/profile', isLoggedIn, function(req, res) {
-        res.render('profile.ejs', {
-            user : req.user
+
+        Sensor.find({user_id:req.user._id }, function(err, sensors){
+            if (err) throw err;
+            console.log(sensors);
+            res.render('profile.ejs', {
+            user : req.user,
+            sensors: sensors
+            });
         });
     });
 
@@ -28,6 +35,52 @@ module.exports = function(app, passport) {
         res.render('data',{data:data});
         });
     });
+    app.post('/logmysensor',isLoggedIn, function(req,res) {
+        Sensorlog.find({sensorId:req.body.sensorId}, function(err, data){
+        if (err) throw err;
+        console.log(req.body.sensorId);
+        console.log(data);
+        res.render('data',{data:data});
+        });
+    });
+
+    
+    app.get('/getsensors',isLoggedIn,function(req,res) {
+        Sensor.find({}, function(err, data){
+        if (err) throw err;
+        console.log(data);
+        res.render('data',{data:data});
+        });
+    });
+    app.get('/getmysensors',isLoggedIn,function(req,res) {
+        Sensor.find({user_id:req.user._id }, function(err, data){
+        if (err) throw err;
+        console.log(data);
+        res.render('data',{data:data});
+        });
+    });
+    app.post('/addsensor',isLoggedIn,function(req,res){
+        var name=req.body.name;
+        var sensorId=req.body.sensorId;
+        var type=req.body.type;
+        console.log("sensorId = " + sensorId + "name = " + name + " type = " + type);
+        var currentDate = new Date();
+        var sensorAdd = new Sensor({
+                sensorId: sensorId,
+                name: name,
+                type: type,
+                timestamp: currentDate,
+                user_id: req.user._id
+            });
+            sensorAdd.save(function(err) {
+                if (err) throw err;
+                console.log('Sensor added successfully!');
+                console.log(sensorAdd);
+            });
+        successRedirect : '/getmysensors'
+    });
+
+
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================
 // =============================================================================
