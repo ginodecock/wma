@@ -77,7 +77,7 @@ module.exports = function(app, passport) {
                 console.log('Sensor added successfully!');
                 console.log(sensorAdd);
             });
-        res.render("done");
+        res.end("done");
     });
 
 
