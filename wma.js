@@ -85,7 +85,8 @@ app.post('/wma',function(req,res) {
   				console.log('Sensorlog saved successfully!');
 			});
 		}
-	res.end(JSON.stringify(parsedBody,null,'\t'))
+	//HTTP_STATUS_OK //res.end(JSON.stringify(parsedBody,null,'\t'))
+	res.sendStatus(200)
 })
 
 
