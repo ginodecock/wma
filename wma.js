@@ -62,6 +62,12 @@ require('./config/passport')(passport); // pass passport for configuration
 
 app.post('/wma',function(req,res) {
 	var success = false
+	res.sendStatus(200);
+	res.statusCode = 200;
+	res.setHeader('Content-Type', 'text/html');
+  	res.setHeader('X-Foo', 'bar');
+  	res.writeHead(200, {'Content-Type': 'text/plain'});
+  	res.end('ok');
 	var parsedBody = req.body
 		if (parsedBody.chipId && parsedBody.value1){
 			var chipId = parsedBody.chipId;
