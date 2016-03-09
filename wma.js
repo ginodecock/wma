@@ -86,7 +86,7 @@ app.post('/wma',function(req,res) {
 			});
 		}
 	//HTTP_STATUS_OK //res.end(JSON.stringify(parsedBody,null,'\t'))
-	res.sendStatus(200)
+	res.status(200).json({status:"ok"})
 })
 
 
