@@ -87,6 +87,7 @@ app.post('/wma',function(req,res) {
 	//HTTP_STATUS_OK //res.end(JSON.stringify(parsedBody,null,'\t'))
 	//res.end("REST: status = 200")
 	//sleep(2000);
+	res.statusCode = 200;
 	 res.setHeader('Content-Type', 'text/html');
   res.setHeader('X-Foo', 'bar');
   res.writeHead(200, {'Content-Type': 'text/plain'});
@@ -97,6 +98,7 @@ app.post('/wma',function(req,res) {
 app.get('/a',function(req,res) {
 	//sleep(2000);
 	//
+	 res.statusCode = 200;
 	  res.setHeader('Content-Type', 'text/html');
   res.setHeader('X-Foo', 'bar');
   res.writeHead(200, {'Content-Type': 'text/plain'});
