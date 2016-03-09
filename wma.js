@@ -60,7 +60,14 @@ mongoose.connect(connection_string);
 require('./config/passport')(passport); // pass passport for configuration
 //require('./app/models/sensorlog')(Sensorlog);
 
-    
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}    
 
 app.post('/wma',function(req,res) {
 	var success = false
@@ -86,13 +93,15 @@ app.post('/wma',function(req,res) {
 			});
 		}
 	//HTTP_STATUS_OK //res.end(JSON.stringify(parsedBody,null,'\t'))
-	res.end("REST: status = 200")
-	//res.status(200).json({status:"ok"})
+	//res.end("REST: status = 200")
+	sleep(2000);
+	res.status(200).json({status:"ok"});
 })
 
 
 app.get('/a',function(req,res) {
-	res.end('hi')
+	sleep(2000);
+	res.status(200).json({status:"ok"});
 })
 
 // routes ======================================================================
