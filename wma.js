@@ -60,15 +60,6 @@ mongoose.connect(connection_string);
 require('./config/passport')(passport); // pass passport for configuration
 //require('./app/models/sensorlog')(Sensorlog);
 
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
-}    
-
 app.post('/wma',function(req,res) {
 	var success = false
 	var parsedBody = req.body
@@ -92,16 +83,24 @@ app.post('/wma',function(req,res) {
   				console.log('Sensorlog saved successfully!');
 			});
 		}
+
 	//HTTP_STATUS_OK //res.end(JSON.stringify(parsedBody,null,'\t'))
 	//res.end("REST: status = 200")
-	sleep(2000);
-	res.status(200).json({status:"ok"});
+	//sleep(2000);
+	 res.setHeader('Content-Type', 'text/html');
+  res.setHeader('X-Foo', 'bar');
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.end('ok');
 })
 
 
 app.get('/a',function(req,res) {
-	sleep(2000);
-	res.status(200).json({status:"ok"});
+	//sleep(2000);
+	//
+	  res.setHeader('Content-Type', 'text/html');
+  res.setHeader('X-Foo', 'bar');
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.end('ok');
 })
 
 // routes ======================================================================
