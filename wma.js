@@ -62,12 +62,6 @@ require('./config/passport')(passport); // pass passport for configuration
 
 app.post('/wma',function(req,res) {
 	var success = false
-	res.sendStatus(200);
-	res.statusCode = 200;
-	res.setHeader('Content-Type', 'text/html');
-  	res.setHeader('X-Foo', 'bar');
-  	res.writeHead(200, {'Content-Type': 'text/plain'});
-  	res.end('ok');
 	var parsedBody = req.body
 		if (parsedBody.chipId && parsedBody.value1){
 			var chipId = parsedBody.chipId;
@@ -93,26 +87,16 @@ app.post('/wma',function(req,res) {
 	//HTTP_STATUS_OK //res.end(JSON.stringify(parsedBody,null,'\t'))
 	//res.end("REST: status = 200")
 	//sleep(2000);
-	res.send(200);
-	res.sendStatus(200);
-	res.statusCode = 200;
-	res.setHeader('Content-Type', 'text/html');
-  	res.setHeader('X-Foo', 'bar');
-  	res.writeHead(200, {'Content-Type': 'text/plain'});
-  	res.end('ok');
+	res.writeHead(200, {'Content-Type': 'text/html'});
+    res.end('post received');
 })
 
 
 app.get('/a',function(req,res) {
 	//sleep(2000);
 	//
-	res.send(200);
-	res.sendStatus(200);
-	res.statusCode = 200;
-	res.setHeader('Content-Type', 'text/html');
-  	res.setHeader('X-Foo', 'bar');
-  	res.writeHead(200, {'Content-Type': 'text/plain'});
-  	res.end('ok');
+	res.writeHead(200, {'Content-Type': 'text/html'});
+    res.end('get received');
 })
 
 // routes ======================================================================
