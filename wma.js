@@ -84,11 +84,7 @@ app.post('/wma',function(req,res) {
 			});
 		}
 
-	//HTTP_STATUS_OK //res.end(JSON.stringify(parsedBody,null,'\t'))
-	//res.end("REST: status = 200")
-	//sleep(2000);
-	res.writeHead(200, {'Content-Type': 'text/html'});
-    res.end('post received');
+	res.end(JSON.stringify(parsedBody,null,'\t'))
 })
 
 
