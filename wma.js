@@ -83,6 +83,7 @@ app.post('/wma',function(req,res) {
   				console.log('Sensorlog saved successfully!');
 			});
 		}
+	res.write('\n');
 	res.json(req.body);
 	//res.end(JSON.stringify(parsedBody,null,'\t'))
 })
