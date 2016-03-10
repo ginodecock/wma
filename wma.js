@@ -4,7 +4,7 @@ var path = require('path')
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP;
 var port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 console.log (port);
-if (typeof ipaddress === "undefined") {ipaddress = "localhost"};
+if (typeof ipaddress === "undefined") {ipaddress = "192.168.168.29"};
 console.log (ipaddress);
 var mongoose = require('mongoose');
 var passport = require('passport');
@@ -83,8 +83,8 @@ app.post('/wma',function(req,res) {
   				console.log('Sensorlog saved successfully!');
 			});
 		}
-
-	res.end(JSON.stringify(parsedBody,null,'\t'))
+	res.json(req.body);
+	//res.end(JSON.stringify(parsedBody,null,'\t'))
 })
 
 
