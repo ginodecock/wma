@@ -65,11 +65,11 @@ app.post('/wma',function(req,res) {
 	console.log('request:');
 	console.log(req.body);
 	var parsedBody = req.body
-		if (parsedBody.chipId && parsedBody.value1){
+		if (parsedBody.chipId && parsedBody.status){
 			var chipId = parsedBody.chipId;
 			var value1 = parsedBody.value1;
-			var value2 = parsedBody.value2 || 0;
-			var value3 = parsedBody.value3 || 0;
+			var value2 = parsedBody.value2;
+			var value3 = parsedBody.value3;
 			var status = parsedBody.status || 'heartbeat';
 			var currentDate = Date();
 			var logNow = new Sensorlog({
