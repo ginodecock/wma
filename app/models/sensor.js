@@ -7,7 +7,9 @@ var sensorSchema = mongoose.Schema({
     sensorId: { type: String, required: true },
     name: { type: String, required: true },
     type: { type: String, required: true },
-    timestamp: { type: Date, 'default': Date.now },
+    pbid: { type: String, required: false},
+    pbnotify: {type: Boolean, required: false},
+    timestamp: { type: Date, required: false},
     user_id: {type: ObjectId}
 });
 module.exports = mongoose.model('Sensor', sensorSchema);

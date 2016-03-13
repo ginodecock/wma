@@ -78,19 +78,31 @@
         <div class="col-sm-6">
             <div class="well">
                 <div class="row">
-                    <div class="col-sm-6">
-                        <% sensors.forEach(function(sensor){ %>
-                        <%= sensor.name %>
-                        <%= sensor.type %>
-                        <form action="/logmysensor" method="post">
+                    
+					<% sensors.forEach(function(sensor){ %>
+                        
+					<table border="0" style="width: 100%">
+						<caption><%= sensor.name %></caption>
+						<tbody>
+							<tr>
+								<td><%= sensor.type %></td>
+								<td><%= sensor.sensorId %></td>
+								<td><%= sensor.pbid%></td>
+								<td><%= sensor.pbnotify%></td>
+							</tr>
+						</tbody>
+					</table>
+					<center>
+                        <form action="/controlmysensor" method="post">
                         <div class="form-group">
                             <input type="hidden" class="form-control" value = <%= sensor.sensorId %> name="sensorId">
                         </div>
-                            <button type="submit" class="btn btn-default"><%= sensor.sensorId %></button>
+                            <button type="submit" class="btn btn-default" value="Log" name="request">Log</button>
+							<button type="submit" class="btn btn-default" value="Alarm" name="request">Alarm</button>
+							<button type="submit" class="btn btn-default" value="Config" name="request">Config</button>
                         </form>
-                        
                         <%  }) %>
-                    </div>
+                    </center>
                 </div>
             </div>
         </div>                    

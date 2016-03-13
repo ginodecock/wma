@@ -43,8 +43,56 @@ module.exports = function(app, passport) {
         res.render('data',{data:data});
         });
     });
+     app.post('/controlmysensor',isLoggedIn, function(req,res) {
+        console.log(req.body);
+        if (req.body.request == "Log"){
+            Sensorlog.find({sensorId:req.body.sensorId}, function(err, data){
+            if (err) throw err;
+            console.log(req.body.sensorId);
+            console.log(data);
+            res.render('data',{data:data});
+            });
+        }
+        if (req.body.request == "Config"){
+            Sensor.find({sensorId:req.body.sensorId}, function(err, sensors){
+            if (err) throw err;
+            console.log(req.body.sensor);
+            console.log(sensors);
+            res.render('config',{sensors: sensors});
+            });
+        }
+        
+    });
 
-    
+
+    app.post('/deletemysensor',isLoggedIn, function(req,res) {
+        console.log(req.body);
+        console.log(req.body._id);
+        Sensor.findOneAndRemove({_id : req.body._id },
+            function (err, user){
+                if (!err) {
+                console.log(" removed");
+                };
+            }
+        );
+        res.end('delete done');
+    });
+
+    app.post('/updatemysensor',isLoggedIn, function(req,res) {
+        console.log(req.body);
+        console.log(req.body._id);
+
+        var query = {"_id": req.body._id};
+        var update = req.body;//{name: req.body.name};
+        var options = {new: true};
+        Sensor.findOneAndUpdate(query, update, options, function(err, person) {
+            if (err) {
+            console.log('got an error');
+            }
+        });
+        res.end('update done');
+    });
+
     app.get('/getsensors',isLoggedIn,function(req,res) {
         Sensor.find({}, function(err, data){
         if (err) throw err;
