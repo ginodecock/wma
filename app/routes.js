@@ -83,7 +83,7 @@ module.exports = function(app, passport) {
         console.log(req.body._id);
 
         var query = {"_id": req.body._id};
-        var update = {pbid: req.body.pbid,pbnotify: req.body.pbnotify};
+        var update = {pbid: req.body.pbid,pbnotify: req.body.pbnotify,name: req.body.name,type: req.body.type};
         var options = {new: true};
         Sensor.findOneAndUpdate(query, update, options, function(err, res) {
             if (err) {
