@@ -71,8 +71,7 @@ app.post('/wma',function(req,res) {
 			var value2 = parsedBody.value2 || 0;
 			var value3 = parsedBody.value3 || 0;
 			var status = parsedBody.status || 'heartbeat';
-			var currentDate = new Date();
-			currentDate.setTimezone('Europe/Amsterdam');
+			var currentDate = new DateTime('now',new DateTimeZone("Europe/Brussels"));
 			var logNow = new Sensorlog({
 				sensorId: chipId,
 				value1: value1,
