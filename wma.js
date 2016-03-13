@@ -1,3 +1,4 @@
+process.env.TZ = 'Europe/Brussels';
 var express = require('express')
 var bodyParser = require('body-parser')
 var path = require('path')
@@ -71,7 +72,7 @@ app.post('/wma',function(req,res) {
 			var value2 = parsedBody.value2 || 0;
 			var value3 = parsedBody.value3 || 0;
 			var status = parsedBody.status || 'heartbeat';
-			var currentDate = new DateTime('now',new DateTimeZone("Europe/Brussels"));
+			var currentDate = Date();
 			var logNow = new Sensorlog({
 				sensorId: chipId,
 				value1: value1,
