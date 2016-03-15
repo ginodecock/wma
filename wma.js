@@ -87,7 +87,7 @@ app.post('/wma',function(req,res) {
   				console.log('Sensorlog saved successfully!');
 			});
 		}
-		if (parsedBody.status.startsWith("alarm")){
+		if (parsedBody.status.substring(0, 5) == "alarm"){
 			console.log("alarm detected");
 			Sensor.findone({sensorId:parsedBody.chipId}, function(err, res){
             	if (err) throw err;
