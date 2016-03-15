@@ -15,7 +15,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var session      = require('express-session');
 var Sensorlog = require('./app/models/sensorlog');
-var Sensor = require('../app/models/sensor');
+var Sensor = require('./app/models/sensor');
 var PushBullet = require('pushbullet');
 
 var app = express();
