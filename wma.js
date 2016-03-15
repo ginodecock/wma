@@ -17,6 +17,7 @@ var session      = require('express-session');
 var Sensorlog = require('./app/models/sensorlog');
 var Sensor = require('./app/models/sensor');
 var PushBullet = require('pushbullet');
+var cronJob = require('cron').CronJob;
 
 var app = express();
 app.use(bodyParser.json());
@@ -95,7 +96,7 @@ app.post('/wma',function(req,res) {
             	if (sensorres.pbnotify && sensorres.pbid != ""){
             		console.log(sensorres.pbid);
             		var pusher = new PushBullet(sensorres.pbid);
-            		pusher.note('', sensorres.name, parsedBody.status + '! Water usage = ' + parsedBody.v1 + 'liter @ Temperature = ' + parsedBody.v2 +'°C', function(error, response) {
+            		pusher.note('', sensorres.name, parsedBody.status + '! Water usage = ' + parsedBody.v1 + ' liter @ Temperature = ' + parsedBody.v2 +'°C', function(error, response) {
 						console.log(response); 
 					});
             	}
@@ -115,15 +116,22 @@ app.get('/a',function(req,res) {
     res.end('get received');
 })
 
+
+var checkDeadSensors = new cronJob('0 * * * * *', function(){
+	console.log(Date())
+	Sensor.find({}, function(err, sensorres){
+        if (err) throw err;
+        console.log(sensorres);
+        });
+});
+checkDeadSensors.start();
+
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+
 
 app.listen(port,ipaddress)
 
 
-/////////////////////////////////////////////////SQL
 
-/*
-//{"chipId":"QZE3veFv67amb","value1":180,"value2":190,"value3":8.55}// dd
-*/
 console.log('The magic happens on port ' + port);
