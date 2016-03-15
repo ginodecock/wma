@@ -90,7 +90,7 @@ app.post('/wma',function(req,res) {
 		console.log(parsedBody.status.substring(0, 5));
 		if (parsedBody.status.substring(0, 5) == "alarm"){
 			console.log("alarm detected");
-			Sensor.findone({sensorId:parsedBody.chipId}, function(err, res){
+			Sensor.findOne({sensorId:parsedBody.chipId}, function(err, res){
             	if (err) throw err;
             	console.log(res);
             	
