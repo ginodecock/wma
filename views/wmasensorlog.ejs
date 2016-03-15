@@ -85,6 +85,7 @@ table {
             <th scope="col">Liter</th>
             <th scope="col">Temperature</th>
             <th scope="col">Battery</th>
+			<th scope="col">Date</th>
         </tr> 
     </thead>
     <tbody>
@@ -93,7 +94,7 @@ table {
             <td><%= sensorlog.value1 %>l</td>
             <td><%= sensorlog.value2 %>C</td>
             <td><%= sensorlog.value3 %>V</td>
-        </tr>
+			<td><%= sensorlog.timestamp %>V</td>
 		<%  }) %>
     </tbody>
 </table>
