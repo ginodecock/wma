@@ -116,13 +116,28 @@ app.get('/a',function(req,res) {
     res.end('get received');
 })
 
-
 var checkDeadSensors = new cronJob('0 * * * * *', function(){
 	console.log(Date())
-	Sensor.find({}, function(err, sensorres){
+	Sensor.find({}, function(err, sensors){
         if (err) throw err;
-        console.log(sensorres);
-        });
+//        console.log(sensors);
+        sensors.forEach(function(sensor) {
+      		if (sensor.pbnotify && sensor.pbid != ""){
+      			var d = new Date();
+				var d2 = new Date();
+				d2.setHours(d.getHours() - 2);	
+      			Sensorlog.count({sensorId:sensor.sensorId,timestamp: {$gt:d2}}, function(err, number){
+      				if (number == 0){
+      					console.log('deadalert '+ sensor.name + ' pbid: ' + sensor.pbid);	
+      					var pusher = new PushBullet(sensor.pbid);
+            			pusher.note('', sensor.name, "Is not communication", function(error, response) {
+							console.log(response); 
+						});
+      				}
+      			});
+      		}
+    	});
+    });
 });
 checkDeadSensors.start();
 
