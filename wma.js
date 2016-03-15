@@ -94,7 +94,6 @@ app.post('/wma',function(req,res) {
             	console.log(res);
             	
             });
-        });
 		}
 	//res.write('\n');
 	res.json(req.body);
