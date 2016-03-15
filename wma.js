@@ -95,7 +95,7 @@ app.post('/wma',function(req,res) {
             	if (sensorres.pbnotify && sensorres.pbid != ""){
             		console.log(sensorres.pbid);
             		var pusher = new PushBullet(sensorres.pbid);
-            		pusher.note('', parsedBody.name, parsedBody.status + '! Water usage = ' + parsedBody.v1 + '@ Temperature = ' + parsedBody.v2 , function(error, response) {
+            		pusher.note('', Sensor.name, parsedBody.status + '! Water usage = ' + parsedBody.v1 + 'liter @ Temperature = ' + parsedBody.v2 +'°C', function(error, response) {
 						console.log(response); 
 					});
             	}
