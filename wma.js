@@ -116,7 +116,7 @@ app.get('/a',function(req,res) {
     res.end('get received');
 })
 
-var checkDeadSensors = new cronJob('0 * * * * *', function(){
+var checkDeadSensors = new cronJob('* 0 * * * *', function(){
 	console.log(Date())
 	Sensor.find({}, function(err, sensors){
         if (err) throw err;

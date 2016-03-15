@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Watermeteralert</title>
+<link rel="stylesheet" type="text/css" media="screen" href="css-table.css" />
+<script type="text/javascript" src="js/jquery-1.2.6.min.js"></script>
+<script type="text/javascript" src="js/style-table.js"></script>
+</head>
+<body>
+<table id="sensor" summary="Watermeteralert logging">
+<% sensors.forEach(function(sensor){ %>
+	<caption>Logging of <%= sensor.name %> with ID sensor.sensorId</caption>
+    <%  }) %>	
+    <thead>   
+        <tr>
+            <th scope="col">Liter</th>
+            <th scope="col">Temperature</th>
+            <th scope="col">Battery</th>
+        </tr> 
+    </thead>
+    <tbody>
+		<% sensorlogs.forEach(function(sensorlog){ %>
+		<tr>
+            <td><%= sensorlog.value1 %>l</td>
+            <td><%= sensorlog.value2 %>°C</td>
+            <td><%= sensorlog.value3 %>V</td>
+        </tr>
+		<%  }) %>
+    </tbody>
+</table>
+
+<p>Demo by: G-DC</p>
+
+</body>
+</html>
