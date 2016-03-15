@@ -15,6 +15,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var session      = require('express-session');
 var Sensorlog = require('./app/models/sensorlog');
+var Sensor = require('../app/models/sensor');
+var PushBullet = require('pushbullet');
 
 var app = express();
 app.use(bodyParser.json());
@@ -84,6 +86,15 @@ app.post('/wma',function(req,res) {
   				if (err) throw err;
   				console.log('Sensorlog saved successfully!');
 			});
+		}
+		if (parsedBody.status.startsWith("alarm")){
+			console.log("alarm detected");
+			Sensor.findone({sensorId:parsedBody.chipId}, function(err, res){
+            	if (err) throw err;
+            	console.log(res);
+            	
+            });
+        });
 		}
 	//res.write('\n');
 	res.json(req.body);
