@@ -45,12 +45,24 @@ module.exports = function(app, passport) {
     });
      app.post('/controlmysensor',isLoggedIn, function(req,res) {
         console.log(req.body);
-        if (req.body.request == "Log"){
-            Sensorlog.find({sensorId:req.body.sensorId}, function(err, data){
+        var sensor;
+        Sensor.findOne({sensorId:req.body.sensorId}, function(err, ressensor){
             if (err) throw err;
-            console.log(req.body.sensorId);
-            console.log(data);
-            res.render('data',{data:data});
+            console.log(req.body.sensor);
+            console.log(ressensor);
+            sensor = ressensor;
+            });
+
+
+        if (req.body.request == "Log"){
+            Sensorlog.find({sensorId:req.body.sensorId}, function(err, sensorlogs){
+                if (err) throw err;
+                console.log(sensor);
+
+                res.render('wmasensorlog.ejs',{
+                    sensor: sensor,
+                    sensorlogs: sensorlogs
+                });
             });
         }
         if (req.body.request == "Config"){
