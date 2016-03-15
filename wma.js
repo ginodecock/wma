@@ -87,12 +87,18 @@ app.post('/wma',function(req,res) {
   				console.log('Sensorlog saved successfully!');
 			});
 		}
-		console.log(parsedBody.status.substring(0, 5));
 		if (parsedBody.status.substring(0, 5) == "alarm"){
 			console.log("alarm detected");
-			Sensor.findOne({sensorId:parsedBody.chipId}, function(err, res){
+			Sensor.findOne({sensorId:parsedBody.chipId}, function(err, sensorres){
             	if (err) throw err;
-            	console.log(res);
+            	console.log(sensorres);
+            	if (sensorres.pbnotify && sensorres.pbid != ""){
+            		console.log(sensorres.pbid);
+            		var pusher = new PushBullet(sensorres.pbid);
+            		pusher.note('', 'noteTitle', 'noteBody', function(error, response) {
+						console.log(response); 
+					});
+            	}
             	
             });
 		}
