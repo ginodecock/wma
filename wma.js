@@ -18,6 +18,7 @@ var Sensorlog = require('./app/models/sensorlog');
 var Sensor = require('./app/models/sensor');
 var PushBullet = require('pushbullet');
 var cronJob = require('cron').CronJob;
+var moment = require('moment');
 
 var app = express();
 app.use(bodyParser.json());
@@ -104,8 +105,16 @@ app.post('/wma',function(req,res) {
             });
 		}
 	//res.write('\n');
-	res.json(req.body);
-	//res.end(JSON.stringify(parsedBody,null,'\t'))
+	var d1 = new Date();
+	var startDate = moment(d1);
+	d1.setMinutes(0);
+	d1.setSeconds(0);
+	d1.setHours(d1.getHours() + 1);
+	var endDate = moment(d1);
+	var secondsDiff = endDate.diff(startDate, 'seconds');
+	console.log('seconds to : '+ secondsDiff);
+	res.json({nextlog : secondsDiff});
+	//res.end(secondsDiff);
 })
 
 
