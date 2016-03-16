@@ -115,7 +115,7 @@ app.post('/wma',function(req,res) {
 	console.log('seconds to : '+ secondsDiff);
 	res.removeHeader("X-Powered-By");
 	res.removeHeader("Set-Cookie");
-
+	res.setHeader('nextlog', secondsDiff.toString());
 	//res.json({nextlog : secondsDiff});
 	res.end('{"nextlog":' + secondsDiff.toString()+'}');
 })
