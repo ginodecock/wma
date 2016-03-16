@@ -113,6 +113,9 @@ app.post('/wma',function(req,res) {
 	var endDate = moment(d1);
 	var secondsDiff = endDate.diff(startDate, 'seconds');
 	console.log('seconds to : '+ secondsDiff);
+	res.removeHeader("X-Powered-By");
+	res.removeHeader("Set-Cookie");
+
 	//res.json({nextlog : secondsDiff});
 	res.end('{"nextlog":' + secondsDiff.toString()+'}');
 })
