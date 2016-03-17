@@ -15,18 +15,39 @@
 <h1>Battery</h1>
 <div id="volt"></div>
 <script>
-var timestamp_data = [
+var Waterusage_data = [
 <% sensorlogs.forEach(function(sensorlog){ %>
   {"Period": <%= dateFormat(sensorlog.timestamp) %>, "Liter": <%= sensorlog.value1 %>},
 <%  }) %>
-
+var Temperature_data = [
+<% sensorlogs.forEach(function(sensorlog){ %>
+  {"Period": <%= dateFormat(sensorlog.timestamp) %>, "Liter": <%= sensorlog.value2 %>},
+<%  }) %>
+var Battery_data = [
+<% sensorlogs.forEach(function(sensorlog){ %>
+  {"Period": <%= dateFormat(sensorlog.timestamp) %>, "Liter": <%= sensorlog.value3 %>},
+<%  }) %>
 ];
 Morris.Line({
   element: 'water',
-  data: timestamp_data,
+  data: Waterusage_data,
   xkey: 'Period',
   ykeys: ['Liter'],
   labels: ['Liter'],
+  dateFormat: function (x) { return new Date(x).toDateString(); }
+},{
+  element: 'temp',
+  data: Temperature_data,
+  xkey: 'Period',
+  ykeys: ['Temperature'],
+  labels: ['Temperature'],
+  dateFormat: function (x) { return new Date(x).toDateString(); }
+},{
+  element: 'volt',
+  data: Battery_data,
+  xkey: 'Period',
+  ykeys: ['Battery'],
+  labels: ['Battery'],
   dateFormat: function (x) { return new Date(x).toDateString(); }
 });
 function Datems() {
