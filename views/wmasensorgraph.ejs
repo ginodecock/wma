@@ -18,7 +18,7 @@
 <script>
 var timestamp_data = [
 <% sensorlogs.forEach(function(sensorlog){ %>
-  {"Period": <%= sensorlog.timestamp %>, "Liter": <%= sensorlog.value1 %>},
+  {"Period": "<%= sensorlog.timestamp %>", "Liter": <%= sensorlog.value1 %>},
 <%  }) %>
 
 ];
