@@ -65,6 +65,17 @@ module.exports = function(app, passport) {
                 });
             });
         }
+        if (req.body.request == "Graph"){
+            Sensorlog.find({sensorId:req.body.sensorId, status:"log"}, function(err, sensorlogs){
+                if (err) throw err;
+                console.log(sensor);
+
+                res.render('wmasensorgraph.ejs',{
+                    sensor: sensor,
+                    sensorlogs: sensorlogs
+                });
+            });
+        }
         if (req.body.request == "Config"){
             Sensor.find({sensorId:req.body.sensorId}, function(err, sensors){
             if (err) throw err;
@@ -73,6 +84,7 @@ module.exports = function(app, passport) {
             res.render('config',{sensors: sensors});
             });
         }
+
         
     });
 
