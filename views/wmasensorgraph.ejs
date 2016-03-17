@@ -21,11 +21,11 @@ var Waterusage_data = [
 <%  }) %>
 var Temperature_data = [
 <% sensorlogs.forEach(function(sensorlog){ %>
-  {"Period": <%= dateFormat(sensorlog.timestamp) %>, "Liter": <%= sensorlog.value2 %>},
+  {"Period": <%= dateFormat(sensorlog.timestamp) %>, "Temperature": <%= sensorlog.value2 %>},
 <%  }) %>
 var Battery_data = [
 <% sensorlogs.forEach(function(sensorlog){ %>
-  {"Period": <%= dateFormat(sensorlog.timestamp) %>, "Liter": <%= sensorlog.value3 %>},
+  {"Period": <%= dateFormat(sensorlog.timestamp) %>, "Battery": <%= sensorlog.value3 %>},
 <%  }) %>
 ];
 Morris.Line({
