@@ -17,7 +17,7 @@
 <div id="volt"></div>
 <% sensorlogs.forEach(function(sensorlog){ %>
 <script>
-      moment("<%= sensorlog.timestamp %>").format('YYYY MM DD');
+      moment('<%= sensorlog.timestamp %>').unix();
 </script>
 <br>
 <%  }) %>
