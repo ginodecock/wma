@@ -16,9 +16,8 @@
 <h1>Battery</h1>
 <div id="volt"></div>
 <% sensorlogs.forEach(function(sensorlog){ %>
-<script>
-      moment('<%= sensorlog.timestamp %>').unix();
-</script>
+<%= moment(<%= sensorlog.timestamp %>).format(DateFormat) %>
+
 <br>
 <%  }) %>
 <script>
