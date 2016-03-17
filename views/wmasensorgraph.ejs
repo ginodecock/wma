@@ -16,7 +16,7 @@
 <h1>Battery</h1>
 <div id="volt"></div>
 <% sensorlogs.forEach(function(sensorlog){ %>
-<%= moment(<%= sensorlog.timestamp %>).format(DateFormat) %>
+<%= moment(sensorlog.timestamp).format(DateFormat) %>
 
 <br>
 <%  }) %>
