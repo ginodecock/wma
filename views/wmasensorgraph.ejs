@@ -8,22 +8,28 @@
   <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 </head>
 <body>
-<h1>Timestamps</h1>
-<div id="graph"></div>
+<h1>Waterusage</h1>
+<div id="water"></div>
+<h1>Temperature</h1>
+<div id="temp"></div>
+<h1>Battery</h1>
+<div id="volt"></div>
+
 <script>
 var timestamp_data = [
 <% sensorlogs.forEach(function(sensorlog){ %>
-  {"period": 1349046000000, "Liter": <%= sensorlog.value1 %>, "Temperature": <%= sensorlog.value2 %>, "Battery": <%= sensorlog.value3 %>},
+  {"Period": <%= sensorlog.timestamp %>, "Liter": <%= sensorlog.value1 %>},
 <%  }) %>
 
 ];
 Morris.Line({
-  element: 'graph',
+  element: 'water',
   data: timestamp_data,
-  xkey: 'period',
-  ykeys: ['Liter', 'Temperature', 'Battery'],
-  labels: ['Liter', 'Temperature', 'Battery'],
+  xkey: 'Period',
+  ykeys: ['Liter'],
+  labels: ['Liter'],
   dateFormat: function (x) { return new Date(x).toDateString(); }
 });
+
 </script>
 </body>
