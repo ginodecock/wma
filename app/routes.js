@@ -1,6 +1,12 @@
 module.exports = function(app, passport) {
 
 // normal routes ===============================================================
+    var ejs = require('ejs')
+        , moment = require('moment');
+
+    /*app.locals.fromNow = function(date){
+        return moment(date).fromNow();
+    }*/
 
     // show the home page (will also have our login links)
     app.get('/', function(req, res) {
@@ -61,7 +67,7 @@ module.exports = function(app, passport) {
 
                 res.render('wmasensorlog.ejs',{
                     sensor: sensor,
-                    sensorlogs: sensorlogs
+                    sensorlogs: sensorlogs,
                 });
             });
         }
