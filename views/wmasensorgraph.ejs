@@ -27,7 +27,8 @@ Morris.Line({
   data: timestamp_data,
   xkey: 'Period',
   ykeys: ['Liter'],
-  labels: ['Liter']
+  labels: ['Liter'],
+  dateFormat: function (x) { return new Date(x).toDateString(); }
 });
 
 </script>
