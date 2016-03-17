@@ -19,7 +19,6 @@ var Sensor = require('./app/models/sensor');
 var PushBullet = require('pushbullet');
 var cronJob = require('cron').CronJob;
 var moment = require('moment');
-var DateFormat = "YYYY-MM-DD hh:mm:ss";
 
 var app = express();
 app.use(bodyParser.json());
@@ -38,9 +37,8 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 app.locals.moment = moment;
-app.locals.DateFormat = DateFormat;
 app.locals.dateFormat = function(date){
-        return moment(date).format('YYYY-MM-DD hh:mm');
+        return moment(date).format('x');
     }
 
 // default to a 'localhost' configuration:

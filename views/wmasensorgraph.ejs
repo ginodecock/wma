@@ -4,8 +4,6 @@
   <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.js"></script>
-  <script src="../node_modules/moment/moment.js"></script>
-  <script src="../node_modules/moment/min/moment.min.js"></script>
   <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.css">
   <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 </head>
@@ -29,6 +27,7 @@ Morris.Line({
   xkey: 'Period',
   ykeys: ['Liter'],
   labels: ['Liter'],
+  dateFormat: function (x) { return new Date(x).toDateString(); }
 });
 function Datems() {
     document.getElementById("demo").innerHTML = "Paragraph changed.";
