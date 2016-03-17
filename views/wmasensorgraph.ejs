@@ -4,6 +4,7 @@
   <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.js"></script>
+  <script src="../node_modules/moment/moment.js"></script>
   <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.css">
   <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 </head>
@@ -14,11 +15,16 @@
 <div id="temp"></div>
 <h1>Battery</h1>
 <div id="volt"></div>
-
+<% sensorlogs.forEach(function(sensorlog){ %>
+<script>
+      moment(<%= sensorlog.timestamp %>).format();
+</script>
+<br>
+<%  }) %>
 <script>
 var timestamp_data = [
 <% sensorlogs.forEach(function(sensorlog){ %>
-  {"Period": "<%= sensorlog.timestamp %>", "Liter": <%= sensorlog.value1 %>},
+  {"Period": <script>(new Date("<%= sensorlog.timestamp %>").getTime()/1000)</script>, "Liter": <%= sensorlog.value1 %>},
 <%  }) %>
 
 ];
@@ -30,6 +36,8 @@ Morris.Line({
   labels: ['Liter'],
   dateFormat: function (x) { return new Date(x).toDateString(); }
 });
-
+function Datems() {
+    document.getElementById("demo").innerHTML = "Paragraph changed.";
+}
 </script>
 </body>
