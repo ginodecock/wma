@@ -29,7 +29,7 @@
                     <div class="col-sm-6">
                     <form action="/sensorLog" method="post">
                     <div class="form-group">
-                    <input type="hidden" class="form-control" value = <%= sensor.sensorId %> name="log">
+                    <input type="hidden" class="form-control" value = "<%= sensor.sensorId %>" name="log">
                         </div>
                             <button type="submit" class="btn btn-default">log</button>
                         </form>
@@ -37,7 +37,7 @@
 					<div class="col-sm-6">
                     <form action="/sensorAlert" method="post">
                     <div class="form-group">
-                    <input type="hidden" class="form-control" value = <%= sensor.sensorId %> name="sensorAlert">
+                    <input type="hidden" class="form-control" value = "<%= sensor.sensorId %>" name="sensorAlert">
                         </div>
                             <button type="submit" class="btn btn-default">Alert</button>
                         </form>
