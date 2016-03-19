@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Sensorlogs</title>
+<title>Sensor alarms</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -16,28 +16,24 @@
 <body>
 	<div class="container">
 	<div class="page-header text-center">
-		<h1>Sensorlogs</h1>
+		<h1>Sensor alarms</h1>
     </div>
  <div class="well">
                 <div class="row">
 <table id="sensor" summary="Watermeteralert logging" class="table table-striped">
 
-	<caption>Logging of <%= sensor.name %> with ID <%= sensor.sensorId %></caption>
+	<caption>Alarms of <%= sensor.name %> with ID <%= sensor.sensorId %></caption>
     <thead>   
         <tr>
-            <th scope="col">Liter</th>
-            <th scope="col">Temperature</th>
-            <th scope="col">Battery</th>
-			<th scope="col">Date</th>
+            <th scope="col">Alarm</th>
+            <th scope="col">Date</th>
         </tr> 
     </thead>
     <tbody>
 		<% sensorlogs.forEach(function(sensorlog){ %>
 		<tr>
-            <td><%= sensorlog.value1 %>l</td>
-            <td><%= sensorlog.value2 %>C</td>
-            <td><%= sensorlog.value3 %>V</td>
-			<td><%= sensorlog.timestamp %></td>
+            <td><%= sensorlog.status %></td>
+            <td><%= sensorlog.timestamp %></td>
 		<%  }) %>
     </tbody>
 </table>

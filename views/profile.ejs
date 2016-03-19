@@ -40,29 +40,6 @@
         <div class="col-sm-6">
             <div class="well">
                 <div class="row">
-                    <div class="col-sm-6">
-                        <form action="/addsensor" method="post">
-                        <div class="form-group">
-                            <label>sensorid</label>
-                            <input type="text" class="form-control" name="sensorId">
-                        </div>
-                        <div class="form-group">
-                            <label>name</label>
-                            <input type="text" class="form-control" name="name">
-                        </div>
-                        <div class="form-group">
-                            <label>type</label>
-                            <input type="text" class="form-control" name="type">
-                        </div>
-                            <button type="submit" class="btn btn-default">Link sensor</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="well">
-                <div class="row">
                     
 					<% sensors.forEach(function(sensor){ %>
                         
@@ -80,11 +57,18 @@
                         </div>
                             <button type="submit" class="btn btn-default" value="Log" name="request">Log</button>
 							<button type="submit" class="btn btn-default" value="Graph" name="request">Graph</button>
+							<button type="submit" class="btn btn-default" value="Battery" name="request">Battery</button>
 							<button type="submit" class="btn btn-default" value="Alarm" name="request">Alarm</button>
 							<button type="submit" class="btn btn-default" value="Config" name="request">Config</button>
                         </form>
                         <%  }) %>
-                    
+						<br>
+						<form action="/newsensor" method="post">
+						<div class="form-group">
+                            <input type="hidden" class="form-control" value = <%= user._id %> name="userId">
+                        </div>
+                            <button type="submit" class="btn btn-default">New sensor</button>
+                        </form>
                 </div>
             </div>
         </div> 

@@ -4,9 +4,6 @@
     <title>Config sensor</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <style>
-        body         { padding-top:80px; }
-    </style>
 </head>
 <html>
     <body>
@@ -15,18 +12,15 @@
 		<h1>Config Sensor</h1>
     </div>
 	
-	<div class="col-sm-6">
             <div class="well">
                 <div class="row">
-                    <div class="col-sm-6">
-					<% sensors.forEach(function(sensor){ %>
+                    <% sensors.forEach(function(sensor){ %>
                         <form action="/updatemysensor" method="post">
                         <div class="form-group">
-                            <label><%=sensor.sensorId%></label>
+                            <label><b>SensorId:</b><%=sensor.sensorId%></label>
 							<input type="hidden" class="form-control" name="sensorId" value= "<%=sensor.sensorId%>">
                         </div>
 						<div class="form-group">
-                            <label><%=sensor._id%></label>
 							<input type="hidden" class="form-control" name="_id" value= <%=sensor._id%>>
                         </div>
                         <div class="form-group">
@@ -56,8 +50,8 @@
                         </form>
 						<%  }) %>
                     </div>
-                </div>
+                
             </div>
-        </div>
+        
     </body>
 </html>

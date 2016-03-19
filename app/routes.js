@@ -61,11 +61,21 @@ module.exports = function(app, passport) {
 
 
         if (req.body.request == "Log"){
-            Sensorlog.find({sensorId:req.body.sensorId, status:"log"}, function(err, sensorlogs){
+            Sensorlog.find({ $query: {sensorId:req.body.sensorId, status:"log"}, $orderby:{timestamp:-1}}, function(err, sensorlogs){
                 if (err) throw err;
                 console.log(sensor);
 
                 res.render('wmasensorlog.ejs',{
+                    sensor: sensor,
+                    sensorlogs: sensorlogs,
+                });
+            });
+        }
+        if (req.body.request == "Alarm"){
+            Sensorlog.find({sensorId:req.body.sensorId, status: /^alarm/}, function(err, sensorlogs){
+                if (err) throw err;
+                console.log(sensor);
+                res.render('wmasensoralarm.ejs',{
                     sensor: sensor,
                     sensorlogs: sensorlogs,
                 });
@@ -77,6 +87,17 @@ module.exports = function(app, passport) {
                 console.log(sensor);
 
                 res.render('wmasensorgraph.ejs',{
+                    sensor: sensor,
+                    sensorlogs: sensorlogs
+                });
+            });
+        }
+        if (req.body.request == "Battery"){
+            Sensorlog.find({sensorId:req.body.sensorId, status:"log"}, function(err, sensorlogs){
+                if (err) throw err;
+                console.log(sensor);
+
+                res.render('wmasensorbattery.ejs',{
                     sensor: sensor,
                     sensorlogs: sensorlogs
                 });
@@ -105,7 +126,8 @@ module.exports = function(app, passport) {
                 };
             }
         );
-        res.end('delete done');
+        res.redirect('/profile'); // redirect to the secure profile section
+       
     });
 
     app.post('/updatemysensor',isLoggedIn, function(req,res) {
@@ -120,7 +142,8 @@ module.exports = function(app, passport) {
             console.log('got an error');
             }
         });
-        res.end('update done');
+        res.redirect('/profile');// redirect to the secure profile section
+       
     });
 
     app.get('/getsensors',isLoggedIn,function(req,res) {
@@ -155,7 +178,11 @@ module.exports = function(app, passport) {
                 console.log('Sensor added successfully!');
                 console.log(sensorAdd);
             });
-        res.end("done");
+        res.redirect('/profile'); // redirect to the secure profile section
+        
+    });
+    app.post('/newsensor',isLoggedIn,function(req,res){
+        res.render('newsensor.ejs');
     });
 
 
