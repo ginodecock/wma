@@ -4,7 +4,7 @@ var path = require('path')
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP;
 var port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 console.log (port);
-if (typeof ipaddress === "undefined") {ipaddress = "192.168.168.29"};
+if (typeof ipaddress === "undefined") {ipaddress = "localhost"};
 console.log (ipaddress);
 var mongoose = require('mongoose');
 var passport = require('passport');
@@ -74,8 +74,8 @@ app.post('/wma',function(req,res) {
 		if (parsedBody.chipId && parsedBody.status){
 			var chipId = parsedBody.chipId;
 			var value1 = parsedBody.v1;
-			var value2 = parsedBody.v2;
-			var value3 = parsedBody.v3;
+			var value2 = parsedBody.v2/100;
+			var value3 = parsedBody.v3/1000;
 			var status = parsedBody.status || 'heartbeat';
 			var currentDate = Date();
 			var logNow = new Sensorlog({

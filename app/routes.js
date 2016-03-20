@@ -72,7 +72,7 @@ module.exports = function(app, passport) {
             });
         }
         if (req.body.request == "Alarm"){
-            Sensorlog.find({sensorId:req.body.sensorId, status: /^alarm/}, function(err, sensorlogs){
+            Sensorlog.find({ $query: {sensorId:req.body.sensorId, status: /^alarm/}, $orderby:{timestamp:-1}}, function(err, sensorlogs){
                 if (err) throw err;
                 console.log(sensor);
                 res.render('wmasensoralarm.ejs',{
