@@ -15,6 +15,7 @@ module.exports = function(app, passport) {
 
     // PROFILE SECTION =========================
     var Sensor = require('../app/models/sensor');
+    var Users = require('../app/models/user');
     app.get('/profile', isLoggedIn, function(req, res) {
 
         Sensor.find({user_id:req.user._id }, function(err, sensors){
@@ -129,7 +130,19 @@ module.exports = function(app, passport) {
         res.redirect('/profile'); // redirect to the secure profile section
        
     });
-
+    app.post('/deletemyuser',isLoggedIn, function(req,res) {
+        console.log(req.body);
+        console.log(req.body.userid);
+        Users.findOneAndRemove({_id : req.body.userid },
+            function (err, user){
+                if (!err) {
+                console.log(" removed");
+                };
+            }
+        );
+        res.redirect('/profile'); // redirect to the secure profile section
+       
+    });
     app.post('/updatemysensor',isLoggedIn, function(req,res) {
         console.log(req.body);
         console.log(req.body._id);
@@ -155,6 +168,13 @@ module.exports = function(app, passport) {
     });
     app.get('/getmysensors',isLoggedIn,function(req,res) {
         Sensor.find({user_id:req.user._id }, function(err, data){
+        if (err) throw err;
+        console.log(data);
+        res.render('data',{data:data});
+        });
+    });
+    app.get('/getmyusers',isLoggedIn,function(req,res) {
+        Users.find({}, function(err, data){
         if (err) throw err;
         console.log(data);
         res.render('data',{data:data});
@@ -216,6 +236,17 @@ module.exports = function(app, passport) {
             failureRedirect : '/signup', // redirect back to the signup page if there is an error
             failureFlash : true // allow flash messages
         }));
+        app.get('/changesignup', function(req, res) {
+            res.render('changesignup.ejs', { message: req.flash('changesignupMessage'), user : req.user});
+        });
+
+        // process the signup form
+        app.post('/changesignup', passport.authenticate('local-changesignup', {
+            successRedirect : '/profile', // redirect to the secure profile section
+            failureRedirect : '/changesignup', // redirect back to the signup page if there is an error
+            failureFlash : true // allow flash messages
+        }));
+
 
     
 // =============================================================================
@@ -250,6 +281,7 @@ module.exports = function(app, passport) {
             res.redirect('/profile');
         });
     });
+    
 };
 
 
