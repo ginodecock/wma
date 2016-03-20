@@ -77,7 +77,7 @@ app.post('/wma',function(req,res) {
 			var chipId = parsedBody.chipId;
 			var value1 = parsedBody.v1;
 			var value2 = parsedBody.v2/100;
-			var value3 = parsedBody.v3/1000;
+			var value3 = parsedBody.v3;
 			var status = parsedBody.status || 'heartbeat';
 			var currentDate = Date();
 			var logNow = new Sensorlog({
