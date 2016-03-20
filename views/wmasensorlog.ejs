@@ -25,7 +25,7 @@
 	<caption>Logging of <%= sensor.name %> with ID <%= sensor.sensorId %></caption>
     <thead>   
         <tr>
-            <th scope="col">Liter</th>
+            <th scope="col">Water</th>
             <th scope="col">Temperature</th>
             <th scope="col">Battery</th>
 			<th scope="col">Date</th>
@@ -36,7 +36,7 @@
 		<tr>
             <td><%= sensorlog.value1 %>l</td>
             <td><%= sensorlog.value2 %>C</td>
-            <td><%= sensorlog.value3 %>V</td>
+            <td><%= sensorlog.value3 %>mV</td>
 			<td><%= sensorlog.timestamp %></td>
 		<%  }) %>
     </tbody>

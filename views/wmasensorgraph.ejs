@@ -30,9 +30,9 @@
 
 <script>
 var Waterusage_data = [
-  {"Period": <%= dateFormat(sensorlogs[0].timestamp) %>, "Liter": <%= sensorlogs[0].value1%>},
+  {"Period": '<%= humanDateFormat(sensorlogs[0].timestamp) %>', "Liter": <%= sensorlogs[0].value1%>},
 <% for(var i=1; i < sensorlogs.length; i++) { %>
-  {"Period": <%= dateFormat(sensorlogs[i].timestamp) %>, "Liter": <%= sensorlogs[i].value1 - sensorlogs[i-1].value1%>},
+  {"Period": '<%= humanDateFormat(sensorlogs[i].timestamp) %>', "Liter": <%= sensorlogs[i].value1 - sensorlogs[i-1].value1%>},
 <%  } %>
 ];
 Morris.Bar({
