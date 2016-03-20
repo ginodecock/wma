@@ -40,7 +40,9 @@ app.locals.moment = moment;
 app.locals.dateFormat = function(date){
         return moment(date).format('x');
     }
-
+app.locals.humanDateFormat = function(date){
+        return moment(date).format('YYYY-MM-DD hh:mm');
+    }
 // default to a 'localhost' configuration:
 var connection_string = '127.0.0.1:27017/wma';
 // if OPENSHIFT env variables are present, use the available connection info:

@@ -16,13 +16,16 @@
 		<h1>Sensorlogs</h1>
     </div>
  <div class="well">
-                <div class="row">
-			
-		<h2>Waterusage</h2>
-		<div id="water"></div><br>
-		<h2>Temperature</h2>
-		<div id="temp"></div>
+        <div class="row">
+			<h2>Water</h2>
+			<div id="water"></div>
+		</div>
 </div>
+<div class="well">
+		<div class="row">
+			<h2>Temperature</h2>
+			<div id="temp"></div>
+		</div>
 </div>
 
 <script>
@@ -37,8 +40,7 @@ Morris.Bar({
   data: Waterusage_data,
   xkey: 'Period',
   ykeys: ['Liter'],
-  labels: ['Liter'],
-  dateFormat: function (x) { return new Date(x).toDateString(); }
+  labels: ['Liter']
 });
 var Temperature_data = [
 <% sensorlogs.forEach(function(sensorlog){ %>
@@ -51,7 +53,7 @@ Morris.Line({
   xkey: 'Period',
   ykeys: ['Temperature'],
   labels: ['Temperature'],
-  dateFormat: function (x) { return new Date(x).toDateString(); }
+  dateFormat: function (y) { return new Date(y).toDateString(); }
 });
 
 function Datems() {
