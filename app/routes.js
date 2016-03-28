@@ -62,7 +62,7 @@ module.exports = function(app, passport) {
 
 
         if (req.body.request == "Log"){
-            Sensorlog.find({ $query: {sensorId:req.body.sensorId, status:"log"}, $orderby:{timestamp:-1}},limit:10, function(err, sensorlogs){
+            Sensorlog.find({ $query: {sensorId:req.body.sensorId, status:"log"}, $orderby:{timestamp:-1}}, function(err, sensorlogs){
                 if (err) throw err;
                 console.log(sensor);
 
@@ -70,7 +70,7 @@ module.exports = function(app, passport) {
                     sensor: sensor,
                     sensorlogs: sensorlogs,
                 });
-            }).limit(100);
+            });
         }
         if (req.body.request == "Alarm"){
             Sensorlog.find({ $query: {sensorId:req.body.sensorId, status: /^alarm/}, $orderby:{timestamp:-1}}, function(err, sensorlogs){
@@ -83,7 +83,7 @@ module.exports = function(app, passport) {
             });
         }
         if (req.body.request == "Graph"){
-            Sensorlog.find({sensorId:req.body.sensorId, status:"log"},limit:10, function(err, sensorlogs){
+            Sensorlog.find({sensorId:req.body.sensorId, status:"log"}, function(err, sensorlogs){
                 if (err) throw err;
                 console.log(sensor);
 
