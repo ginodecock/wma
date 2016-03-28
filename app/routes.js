@@ -62,7 +62,7 @@ module.exports = function(app, passport) {
 
 
         if (req.body.request == "Log"){
-            Sensorlog.find({ $query: {sensorId:req.body.sensorId, status:"log"}, $orderby:{timestamp:-1}}, function(err, sensorlogs){
+            Sensorlog.find({ $query: {sensorId:req.body.sensorId, status:"log"}, $orderby:{timestamp:-1}}, { skip: 0, limit: 100 },function(err, sensorlogs){
                 if (err) throw err;
                 console.log(sensor);
 
