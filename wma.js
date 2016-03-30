@@ -1,4 +1,5 @@
 var express = require('express')
+var enforce = require('express-sslify')
 var bodyParser = require('body-parser')
 var path = require('path')
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP;
@@ -21,6 +22,12 @@ var cronJob = require('cron').CronJob;
 var moment = require('moment');
 
 var app = express();
+if (config.env === 'production' && config.isStaging === 'false') {
+
+    // Enforce HTTPs connections only
+    app.use(enforce.HTTPS({ trustProtoHeader: true }));
+
+};
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname,'public')));
 app.use(morgan('dev')); // log every request to the console
@@ -160,7 +167,6 @@ checkDeadSensors.start();
 
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
-
 
 app.listen(port,ipaddress)
 
