@@ -5,7 +5,11 @@ var path = require('path')
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP;
 var port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 console.log (port);
-if (typeof ipaddress === "undefined") {ipaddress = "localhost"};
+var production = true;
+if (typeof ipaddress === "undefined") {
+	production = false;
+	ipaddress = "localhost"
+};
 console.log (ipaddress);
 var mongoose = require('mongoose');
 var passport = require('passport');
@@ -23,6 +27,7 @@ var moment = require('moment');
 
 var app = express();
 app.use(enforce.HTTPS({ trustProtoHeader: true }));
+
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname,'public')));
 app.use(morgan('dev')); // log every request to the console
