@@ -22,12 +22,7 @@ var cronJob = require('cron').CronJob;
 var moment = require('moment');
 
 var app = express();
-if (config.env === 'production' && config.isStaging === 'false') {
-
-    // Enforce HTTPs connections only
-    app.use(enforce.HTTPS({ trustProtoHeader: true }));
-
-};
+app.use(enforce.HTTPS({ trustProtoHeader: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname,'public')));
 app.use(morgan('dev')); // log every request to the console
