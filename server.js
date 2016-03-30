@@ -117,10 +117,18 @@ var SampleApp = function() {
 
         //  Add handlers for the app (from the routes).
         for (var r in self.routes) {
-            self.app.get(r, self.routes[r]);
+           // self.app.get(r, self.routes[r]);
+            self.app.get(r, redirectSec, self.routes[r]);
         }
     };
 
+    function redirectSec(req, res, next) {
+    if (req.headers['x-forwarded-proto'] == 'http') {
+        res.redirect('https://' + req.headers.host + req.path);
+    } else {
+      return next();
+    }
+    }
 
     /**
      *  Initializes the sample application.
