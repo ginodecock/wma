@@ -146,7 +146,7 @@ var checkDeadSensors = new cronJob('0 0 * * * *', function(){
       				if (number == 0){
       					console.log('deadalert '+ sensor.name + ' pbid: ' + sensor.pbid);	
       					var pusher = new PushBullet(sensor.pbid);
-            			pusher.note('', sensor.name, "Is not communication", function(error, response) {
+            			pusher.note('', sensor.name, "Is not communicating", function(error, response) {
 							console.log(response); 
 						});
       				}
