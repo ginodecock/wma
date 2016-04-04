@@ -1,5 +1,5 @@
 var express = require('express')
-var enforce = require('express-sslify')
+//var enforce = require('express-sslify')
 var bodyParser = require('body-parser')
 var path = require('path')
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP;
@@ -8,7 +8,7 @@ console.log (port);
 var production = true;
 if (typeof ipaddress === "undefined") {
 	production = false;
-	ipaddress = "localhost"
+	ipaddress = "192.168.168.21"
 };
 console.log (ipaddress);
 var mongoose = require('mongoose');
@@ -26,7 +26,7 @@ var cronJob = require('cron').CronJob;
 var moment = require('moment');
 
 var app = express();
-app.use(enforce.HTTPS({ trustProtoHeader: true }));
+//app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname,'public')));
@@ -79,13 +79,17 @@ app.post('/wma',function(req,res) {
 	var success = false
 	console.log('request:');
 	console.log(req.body);
-	var parsedBody = req.body
+	var rebootOffset = 0;
+	Sensor.findOne({sensorId:req.body.chipId}, function(err, sensorres){
+        console.log("++" + sensorres.rebootoffset + "++");
+        rebootOffset = sensorres.rebootoffset;    	
+    	var parsedBody = req.body
 		if (parsedBody.chipId && parsedBody.status){
 			var chipId = parsedBody.chipId;
-			var value1 = parsedBody.v1;
+			var value1 = parsedBody.v1 + rebootOffset;
 			var value2 = parsedBody.v2/100;
 			var value3 = parsedBody.v3;
-			var status = parsedBody.status || 'heartbeat';
+			var status = parsedBody.status;
 			var currentDate = Date();
 			var logNow = new Sensorlog({
 				sensorId: chipId,
@@ -100,21 +104,31 @@ app.post('/wma',function(req,res) {
   				console.log('Sensorlog saved successfully!');
 			});
 		}
+
 		if (parsedBody.status.substring(0, 5) == "alarm"){
 			console.log("alarm detected");
-			Sensor.findOne({sensorId:parsedBody.chipId}, function(err, sensorres){
-            	if (err) throw err;
-            	console.log(sensorres);
-            	if (sensorres.pbnotify && sensorres.pbid != ""){
-            		console.log(sensorres.pbid);
-            		var pusher = new PushBullet(sensorres.pbid);
-            		pusher.note('', sensorres.name, parsedBody.status + '! Water usage = ' + parsedBody.v1 + ' liter @ Temperature = ' + parsedBody.v2/100 +'°C', function(error, response) {
-						console.log(response); 
-					});
-            	}
-            	
-            });
+			if (sensorres.pbnotify && sensorres.pbid != ""){
+            	console.log(sensorres.pbid);
+            	var pusher = new PushBullet(sensorres.pbid);
+            	pusher.note('', sensorres.name, parsedBody.status + '! Water usage = ' + parsedBody.v1 + ' liter @ Temperature = ' + parsedBody.v2/100 +'°C', function(error, response) {
+					console.log(response); 
+				});
+            }
 		}
+		if ((parsedBody.status == "alarmBoot") || (parsedBody.status == "alarmTrigger") ){
+			console.log("set reboot offset");
+			Sensorlog.findOne({ $query: {sensorId:parsedBody.chipId, status:"log"}, $orderby:{timestamp:-1}},function(err, sensorlogres){
+				var query = {sensorId:parsedBody.chipId};
+        		var update = {rebootoffset: sensorlogres.value1};
+        		var options = {new: true};
+        		Sensor.findOneAndUpdate(query, update, options, function(err, res) {
+            		if (err) {
+            		console.log('got an error');
+            		}
+        		});
+        	});
+		}
+	});
 	//res.write('\n');
 	var d1 = new Date();
 	var startDate = moment(d1);
@@ -126,9 +140,9 @@ app.post('/wma',function(req,res) {
 	console.log('seconds to : '+ secondsDiff);
 	res.removeHeader("X-Powered-By");
 	res.removeHeader("Set-Cookie");
-	res.setHeader('Nextlog', secondsDiff.toString() + 's');
+	res.setHeader('Nextlog', Math.abs(secondsDiff).toString() + 's');
 	//res.json({nextlog : secondsDiff});
-	res.end('{"nextlog":' + secondsDiff.toString()+'}');
+	res.end('{"nextlog":' + Math.abs(secondsDiff).toString()+'}');
 })
 
 

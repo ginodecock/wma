@@ -10,6 +10,8 @@ var sensorSchema = mongoose.Schema({
     pbid: { type: String, required: false},
     pbnotify: {type: Boolean, required: false},
     timestamp: { type: Date, required: false},
-    user_id: {type: ObjectId}
+    user_id: {type: ObjectId},
+    rebootoffset: { type: Number, default: 0},
+    meteroffset: { type: Number, default: 0}
 });
 module.exports = mongoose.model('Sensor', sensorSchema);

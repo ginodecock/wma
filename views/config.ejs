@@ -5,6 +5,11 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 </head>
+<script type="text/javascript">
+function resetInput(id) {
+   document.getElementById(id+"input").value="0";
+}
+</script>
 <html>
     <body>
 	<div class="container">
@@ -28,8 +33,16 @@
                             <input type="text" class="form-control" name="name" value= "<%=sensor.name%>">
                         </div>
                         <div class="form-group">
-                            <label>type</label>
+                            <label>Type</label>
                             <input type="text" class="form-control" name="type" value= "<%=sensor.type%>">
+                        </div>
+                        <div class="form-group">
+                            <label>Meteroffset</label>
+                            <input type="number" class="form-control" name="meteroffset" value= "<%=sensor.meteroffset%>"> 
+                        </div>
+                        <div class="form-group">
+                            <label>Rebootoffset</label>
+                            <input id="rebootoffsetinput" type="number" class="form-control" name="rebootoffset" value= "<%=sensor.rebootoffset%>"><input type="button" id="rebootoffset" class="btn btn-default" onclick="resetInput(this.id) "value="Reset">
                         </div>
 						<div class="form-group">
                             <label>Pushbullet Id</label>

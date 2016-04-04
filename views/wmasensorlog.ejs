@@ -22,7 +22,7 @@
                 <div class="row">
 <table id="sensor" summary="Watermeteralert logging" class="table table-striped">
 
-	<caption>Logging of <%= sensor.name %> with ID <%= sensor.sensorId %></caption>
+	<caption>Logging of <%= sensor.name %> with ID <%= sensor.sensorId %> (Offset = <%= sensor.meteroffset %> liter)</caption>
     <thead>   
         <tr>
             <th scope="col">Water</th>
@@ -34,7 +34,7 @@
     <tbody>
 		<% sensorlogs.forEach(function(sensorlog){ %>
 		<tr>
-            <td><%= sensorlog.value1 %>l</td>
+            <td><%= sensorlog.value1 + sensor.meteroffset%>l</td>
             <td><%= sensorlog.value2 %>C</td>
             <td><%= sensorlog.value3 %>mV</td>
 			<td><%= sensorlog.timestamp %></td>
