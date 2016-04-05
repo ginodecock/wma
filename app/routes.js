@@ -149,7 +149,7 @@ module.exports = function(app, passport) {
             sensor = ressensor;
             console.log(new Date(req.body.startdate).toISOString());
             console.log(new Date(req.body.enddate).toISOString());
-            Sensorlog.find({sensorId:req.body.sensorId,status:"log"}).where('timestamp').lte(new Date(req.body.enddate).toISOString()).gte(new Date(req.body.startdate).toISOString()).sort({'timestamp':-1}).exec(function(err, sensorlogs) {
+            Sensorlog.find({sensorId:req.body.sensorId,status:"log"}).where('timestamp').lte(new Date(req.body.enddate).toISOString()).gte(new Date(req.body.startdate).toISOString()).exec(function(err, sensorlogs) {
                 if (err) throw err;
                 console.log(sensorlogs);
                 res.render('wmasensorlog.ejs',{
