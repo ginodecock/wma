@@ -18,11 +18,26 @@
 	<div class="page-header text-center">
 		<h1>Sensorlogs</h1>
     </div>
+    <div class="well">
+        <div class="row">
+      <center>
+Logging of <%= sensor.name %> with ID <%= sensor.sensorId %>
+        <form action="/datesensorlog" method="post">
+        <div class="form-group">
+        <input type="hidden" class="form-control" value = <%= sensor.sensorId%> name="sensorId">
+        <b>Start: </b><input type="date" name="startdate" value=<%=startdate%>><b> End: </b><input type="date" name="enddate" value=<%=enddate%>> <button type="submit" class="btn btn-default" value="datefindlog" name="datefindlog"> Find</button>
+        </div>
+        </form>
+
+      </center>
+      
+    </div>
+</div>
  <div class="well">
                 <div class="row">
 <table id="sensor" summary="Watermeteralert logging" class="table table-striped">
 
-	<caption>Logging of <%= sensor.name %> with ID <%= sensor.sensorId %> (Offset = <%= sensor.meteroffset %> liter)</caption>
+	<caption>Offset = <%= sensor.meteroffset %> liter</caption>
     <thead>   
         <tr>
             <th scope="col">Water</th>

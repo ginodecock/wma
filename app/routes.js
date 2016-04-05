@@ -69,6 +69,8 @@ module.exports = function(app, passport) {
                 res.render('wmasensorlog.ejs',{
                     sensor: sensor,
                     sensorlogs: sensorlogs,
+                    startdate: moment(Date.now()).subtract(7, 'days').format('YYYY-MM-DD'),
+                    enddate: moment(Date.now()).format('YYYY-MM-DD')
                 });
             });
         }
@@ -89,7 +91,9 @@ module.exports = function(app, passport) {
 
                 res.render('wmasensorgraph.ejs',{
                     sensor: sensor,
-                    sensorlogs: sensorlogs.reverse()
+                    sensorlogs: sensorlogs.reverse(),
+                    startdate: moment(Date.now()).subtract(7, 'days').format('YYYY-MM-DD'),
+                    enddate: moment(Date.now()).format('YYYY-MM-DD')
                 });
             });
         }
@@ -115,8 +119,48 @@ module.exports = function(app, passport) {
 
         
     });
-
-
+    app.post('/datesensorgraph',isLoggedIn, function(req,res) {
+        console.log(req.body);
+        var sensor;
+        Sensor.findOne({sensorId:req.body.sensorId}, function(err, ressensor){
+            if (err) throw err;
+            console.log(ressensor);
+            sensor = ressensor;
+            console.log(new Date(req.body.startdate).toISOString());
+            console.log(new Date(req.body.enddate).toISOString());
+            Sensorlog.find({sensorId:req.body.sensorId,status:"log"}).where('timestamp').lte(new Date(req.body.enddate).toISOString()).gte(new Date(req.body.startdate).toISOString()).sort({'timestamp':-1}).exec(function(err, sensorlogs) {
+                if (err) throw err;
+                console.log(sensorlogs);
+                res.render('wmasensorgraph.ejs',{
+                    sensor: sensor,
+                    sensorlogs: sensorlogs.reverse(),
+                    startdate: req.body.startdate,
+                    enddate: req.body.enddate
+                });
+            });
+        });
+    });
+    app.post('/datesensorlog',isLoggedIn, function(req,res) {
+        console.log(req.body);
+        var sensor;
+        Sensor.findOne({sensorId:req.body.sensorId}, function(err, ressensor){
+            if (err) throw err;
+            console.log(ressensor);
+            sensor = ressensor;
+            console.log(new Date(req.body.startdate).toISOString());
+            console.log(new Date(req.body.enddate).toISOString());
+            Sensorlog.find({sensorId:req.body.sensorId,status:"log"}).where('timestamp').lte(new Date(req.body.enddate).toISOString()).gte(new Date(req.body.startdate).toISOString()).sort({'timestamp':-1}).exec(function(err, sensorlogs) {
+                if (err) throw err;
+                console.log(sensorlogs);
+                res.render('wmasensorlog.ejs',{
+                    sensor: sensor,
+                    sensorlogs: sensorlogs.reverse(),
+                    startdate: req.body.startdate,
+                    enddate: req.body.enddate
+                });
+            });
+        });
+    });
     app.post('/deletemysensor',isLoggedIn, function(req,res) {
         console.log(req.body);
         console.log(req.body._id);
