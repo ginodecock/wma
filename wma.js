@@ -132,7 +132,7 @@ app.post('/wma',function(req,res) {
 	//res.write('\n');
 	var d1 = new Date();
 	var startDate = moment(d1);
-	d1.setMinutes(0);
+	d1.setMinutes(15);
 	d1.setSeconds(0);
 	d1.setHours(d1.getHours() + 1);
 	var endDate = moment(d1);

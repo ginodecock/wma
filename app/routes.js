@@ -62,7 +62,7 @@ module.exports = function(app, passport) {
 
 
         if (req.body.request == "Log"){
-            Sensorlog.find({ $query: {sensorId:req.body.sensorId, status:"log"}, $orderby:{timestamp:-1}},{},{limit:100}, function(err, sensorlogs){
+            Sensorlog.find({ $query: {sensorId:req.body.sensorId, status:"log"}, $orderby:{timestamp:-1}},{},{limit:150}, function(err, sensorlogs){
                 if (err) throw err;
                 console.log(sensor);
 
@@ -75,7 +75,7 @@ module.exports = function(app, passport) {
             });
         }
         if (req.body.request == "Alarm"){
-            Sensorlog.find({ $query: {sensorId:req.body.sensorId, status: /^alarm/}, $orderby:{timestamp:-1}},{},{limit:100}, function(err, sensorlogs){
+            Sensorlog.find({ $query: {sensorId:req.body.sensorId, status: /^alarm/}, $orderby:{timestamp:-1}},{},{limit:150}, function(err, sensorlogs){
                 if (err) throw err;
                 console.log(sensor);
                 res.render('wmasensoralarm.ejs',{
@@ -85,7 +85,7 @@ module.exports = function(app, passport) {
             });
         }
         if (req.body.request == "Graph"){
-            Sensorlog.find({ $query: {sensorId:req.body.sensorId, status:"log"}, $orderby:{timestamp:-1}},{},{limit:100}, function(err, sensorlogs){
+            Sensorlog.find({ $query: {sensorId:req.body.sensorId, status:"log"}, $orderby:{timestamp:-1}},{},{limit:150}, function(err, sensorlogs){
                 if (err) throw err;
                 console.log(sensor);
 
@@ -98,13 +98,15 @@ module.exports = function(app, passport) {
             });
         }
         if (req.body.request == "Battery"){
-            Sensorlog.find({sensorId:req.body.sensorId, status:"log"}, function(err, sensorlogs){
+            Sensorlog.find({ $query: {sensorId:req.body.sensorId, status:"log"}, $orderby:{timestamp:-1}},{},{limit:150}, function(err, sensorlogs){
                 if (err) throw err;
                 console.log(sensor);
 
                 res.render('wmasensorbattery.ejs',{
                     sensor: sensor,
-                    sensorlogs: sensorlogs
+                    sensorlogs: sensorlogs.reverse(),
+                    startdate: moment(Date.now()).subtract(7, 'days').format('YYYY-MM-DD'),
+                    enddate: moment(Date.now()).format('YYYY-MM-DD')
                 });
             });
         }
@@ -132,6 +134,27 @@ module.exports = function(app, passport) {
                 if (err) throw err;
                 console.log(sensorlogs);
                 res.render('wmasensorgraph.ejs',{
+                    sensor: sensor,
+                    sensorlogs: sensorlogs.reverse(),
+                    startdate: req.body.startdate,
+                    enddate: req.body.enddate
+                });
+            });
+        });
+    });
+    app.post('/datesensorbattery',isLoggedIn, function(req,res) {
+        console.log(req.body);
+        var sensor;
+        Sensor.findOne({sensorId:req.body.sensorId}, function(err, ressensor){
+            if (err) throw err;
+            console.log(ressensor);
+            sensor = ressensor;
+            console.log(new Date(req.body.startdate).toISOString());
+            console.log(new Date(req.body.enddate).toISOString());
+            Sensorlog.find({sensorId:req.body.sensorId,status:"log"}).where('timestamp').lte(new Date(req.body.enddate).toISOString()).gte(new Date(req.body.startdate).toISOString()).sort({'timestamp':-1}).exec(function(err, sensorlogs) {
+                if (err) throw err;
+                console.log(sensorlogs);
+                res.render('wmasensorbattery.ejs',{
                     sensor: sensor,
                     sensorlogs: sensorlogs.reverse(),
                     startdate: req.body.startdate,

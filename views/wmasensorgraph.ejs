@@ -6,6 +6,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
@@ -18,8 +20,19 @@
     </div>
  <div class="well">
         <div class="row">
+        <table style="width:100%">
+        <col width="20%">
+        <col width="60%">
+        <col width="20%">
+        <tr>
+          <td><form action="/profile">
+           <left><input type="submit" value="Go to Dashboard" class="btn btn-default"> </left> 
+          </form></td>
+          <td><center>Logging of <%= sensor.name %> with ID <%= sensor.sensorId %></center></td> 
+          <td> </td>
+        </tr>
+        </table>
       <center>
-Logging of <%= sensor.name %> with ID <%= sensor.sensorId %>
         <form action="/datesensorgraph" method="post">
         <div class="form-group">
         <input type="hidden" class="form-control" value = <%= sensor.sensorId%> name="sensorId">
