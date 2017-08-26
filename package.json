@@ -9,7 +9,7 @@
     "openshift"
   ],
   "scripts": {
-    "start": "wma.js"
+    "start": "node wma.js"
   },
   "author": {
     "name": "gino de cock",
