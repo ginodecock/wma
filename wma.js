@@ -2,7 +2,7 @@ var express = require('express')
 //var enforce = require('express-sslify')
 var bodyParser = require('body-parser')
 var path = require('path')
-var ipaddress = "0.0.0.0";//process.env.OPENSHIFT_NODEJS_IP;
+var ipaddress = "127.0.0.1";//process.env.OPENSHIFT_NODEJS_IP;
 var port = 80;//process.env.OPENSHIFT_NODEJS_PORT || 8080;
 console.log (port);
 var production = true;
