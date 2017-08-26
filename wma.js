@@ -2,8 +2,8 @@ var express = require('express')
 //var enforce = require('express-sslify')
 var bodyParser = require('body-parser')
 var path = require('path')
-var ipaddress = process.env.OPENSHIFT_NODEJS_IP;
-var port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var ipaddress = "0.0.0.0";//process.env.OPENSHIFT_NODEJS_IP;
+var port = 80;//process.env.OPENSHIFT_NODEJS_PORT || 8080;
 console.log (port);
 var production = true;
 if (typeof ipaddress === "undefined") {
@@ -53,12 +53,8 @@ app.locals.humanDateFormat = function(date){
 // default to a 'localhost' configuration:
 var connection_string = '127.0.0.1:27017/wma';
 // if OPENSHIFT env variables are present, use the available connection info:
-if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
-  connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
-  process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
-  process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
-  process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
-  process.env.OPENSHIFT_APP_NAME;
+if(process.env.MONGO_URL){
+  connection_string = process.env.MONGO_URL;
 }
 console.log(connection_string);
 var mongojs = require('mongojs');
