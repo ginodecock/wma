@@ -8,6 +8,9 @@
     "application",
     "openshift"
   ],
+  "scripts": {
+    "start": "wma.js"
+  },
   "author": {
     "name": "gino de cock",
     "email": "ginodecock@skynet.be",
@@ -43,6 +46,4 @@
   "private": true,
   "main": "wma.js"
 }
-"scripts": {
-    "start": "wma.js"
-}
+
