@@ -43,3 +43,6 @@
   "private": true,
   "main": "wma.js"
 }
+"scripts": {
+    "start": "wma.js"
+}
