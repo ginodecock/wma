@@ -178,8 +178,10 @@ checkDeadSensors.start();
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
-app.listen(port,ipaddress)
-
+//app.listen(port,ipaddress)
+var server = app.listen(80, function () {
+    console.log("Listening on port %s...", server.address().port);
+})
 
 
 console.log('The magic happens on port ' + port);
