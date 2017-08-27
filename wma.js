@@ -179,7 +179,7 @@ checkDeadSensors.start();
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 //app.listen(port,ipaddress)
-var server = app.listen(80, function () {
+var server = app.listen(8080, function () {
     console.log("Listening on port %s...", server.address().port);
 })
 
