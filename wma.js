@@ -4,6 +4,7 @@ var bodyParser = require('body-parser')
 var path = require('path')
 var ipaddress = "0.0.0.0";//process.env.OPENSHIFT_NODEJS_IP;
 var port = 8080;//process.env.OPENSHIFT_NODEJS_PORT || 8080;
+
 console.log (port);
 var production = true;
 if (typeof ipaddress === "undefined") {
@@ -51,7 +52,7 @@ app.locals.humanDateFormat = function(date){
         return moment(date).format('YYYY-MM-DD hh:mm');
     }
 connection_string = process.env.MONGO_URL;
-
+mongoURL = process.env.MONGO_URL;
 console.log(connection_string);
 var mongojs = require('mongojs');
 var db = mongojs(connection_string, ['books']);
