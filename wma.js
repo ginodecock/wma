@@ -3,7 +3,7 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var path = require('path')
 var ipaddress = "127.0.0.1";//process.env.OPENSHIFT_NODEJS_IP;
-var port = 80;//process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var port = 8080;//process.env.OPENSHIFT_NODEJS_PORT || 8080;
 console.log (port);
 var production = true;
 if (typeof ipaddress === "undefined") {
