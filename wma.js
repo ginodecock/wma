@@ -66,6 +66,26 @@ db.books.find({}).limit(10).forEach(function(err, doc) {
 mongoose.connect(connection_string);
 require('./config/passport')(passport); // pass passport for configuration
 //require('./app/models/sensorlog')(Sensorlog);
+var initDb = function(callback) {
+  if (mongoURL == null) return;
+
+  var mongodb = require('mongodb');
+  if (mongodb == null) return;
+
+  mongodb.connect(mongoURL, function(err, conn) {
+    if (err) {
+      callback(err);
+      return;
+    }
+
+    db = conn;
+    dbDetails.databaseName = db.databaseName;
+    dbDetails.url = mongoURLLabel;
+    dbDetails.type = 'MongoDB';
+
+    console.log('Connected to MongoDB at: %s', mongoURL);
+  });
+};
 
 app.post('/wma',function(req,res) {
 	var success = false
@@ -143,6 +163,28 @@ app.get('/a',function(req,res) {
 	//
 	res.writeHead(200, {'Content-Type': 'text/html'});
     res.end('get received');
+})
+var db = null,
+    dbDetails = new Object();
+
+
+
+app.get('/', function (req, res) {
+  // try to initialize the db on every request if it's not already
+  // initialized.
+  if (!db) {
+    initDb(function(err){});
+  }
+  if (db) {
+    var col = db.collection('counts');
+    // Create a document with request IP and current time of request
+    col.insert({ip: req.ip, date: Date.now()});
+    col.count(function(err, count){
+      res.render('index.html', { pageCountMessage : count, dbInfo: dbDetails });
+    });
+  } else {
+    res.render('index.html', { pageCountMessage : null});
+  }
 })
 
 app.get('/pagecount', function (req, res) {
