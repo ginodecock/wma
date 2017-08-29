@@ -112,9 +112,9 @@ app.post('/wma',function(req,res) {
 			console.log("set reboot offset");
 			Sensorlog.findOne({ $query: {sensorId:parsedBody.chipId, status:"log"}, $orderby:{timestamp:-1}},function(err, sensorlogres){
 				var query = {sensorId:parsedBody.chipId};
-				//if (sensorlogres.value1 != null){
-				//		var update = {rebootoffset: sensorlogres.value1};
-				//}
+				if (sensorlogres.value1 != null){
+						var update = {rebootoffset: sensorlogres.value1};
+				}
         		
         		var options = {new: true};
         		Sensor.findOneAndUpdate(query, update, options, function(err, res) {
