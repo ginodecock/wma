@@ -2,7 +2,7 @@ var express = require('express')
 //var enforce = require('express-sslify')
 var bodyParser = require('body-parser')
 var path = require('path')
-var ipaddress = "127.0.0.1";//process.env.OPENSHIFT_NODEJS_IP;
+var ipaddress = "0.0.0.0";//process.env.OPENSHIFT_NODEJS_IP;
 var port = 8080;//process.env.OPENSHIFT_NODEJS_PORT || 8080;
 console.log (port);
 var production = true;
@@ -50,12 +50,8 @@ app.locals.dateFormat = function(date){
 app.locals.humanDateFormat = function(date){
         return moment(date).format('YYYY-MM-DD hh:mm');
     }
-// default to a 'localhost' configuration:
-var connection_string = '127.0.0.1:27017/wma';
-// if OPENSHIFT env variables are present, use the available connection info:
-if(process.env.MONGO_URL){
-  connection_string = process.env.MONGO_URL;
-}
+connection_string = process.env.MONGO_URL;
+
 console.log(connection_string);
 var mongojs = require('mongojs');
 var db = mongojs(connection_string, ['books']);
