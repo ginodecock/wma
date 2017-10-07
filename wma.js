@@ -148,6 +148,22 @@ app.get('/a',function(req,res) {
 	res.writeHead(200, {'Content-Type': 'text/html'});
     res.end('get received');
 })
+
+app.get('/nextlog',function(req,res) {
+	var d1 = new Date();
+	var startDate = moment(d1);
+	d1.setMinutes(15);
+	d1.setSeconds(0);
+	d1.setHours(d1.getHours() + 1);
+	var endDate = moment(d1);
+	var secondsDiff = endDate.diff(startDate, 'seconds');
+	console.log('seconds to : '+ secondsDiff);
+	res.removeHeader("X-Powered-By");
+	res.removeHeader("Set-Cookie");
+	res.setHeader('Nextlog', Math.abs(secondsDiff).toString() + 's');
+	//res.json({nextlog : secondsDiff});
+	res.end('{"nextlog":' + Math.abs(secondsDiff).toString()+'}');
+})
 var db = null,
     dbDetails = new Object();
 
