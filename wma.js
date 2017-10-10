@@ -54,17 +54,18 @@ app.locals.humanDateFormat = function(date){
 connection_string = process.env.MONGO_URL;
 mongoURL = process.env.MONGO_URL;
 console.log(connection_string);
-var mongojs = require('mongojs');
-var db = mongojs(connection_string, ['books']);
-var books = db.collection('books');
+//var mongojs = require('mongojs');
+//var db = mongojs(connection_string, ['books']);
+//var books = db.collection('books');
 // similar syntax as the Mongo command-line interface
 // log each of the first ten docs in the collection
-db.books.find({}).limit(10).forEach(function(err, doc) {
-  if (err) throw err;
-  if (doc) { console.dir(doc); }
-});
+//db.books.find({}).limit(10).forEach(function(err, doc) {
+//  if (err) throw err;
+//  if (doc) { console.dir(doc); }
+//});
 
 mongoose.connect(connection_string);
+var db = mongoose.connection;
 require('./config/passport')(passport); // pass passport for configuration
 //require('./app/models/sensorlog')(Sensorlog);
 
