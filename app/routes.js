@@ -91,7 +91,7 @@ module.exports = function(app, passport) {
 
                 res.render('wmasensorgraph.ejs',{
                     sensor: sensor,
-                    sensorlogs: sensorlogs.reverse(),
+                    sensorlogs: sensorlogs,
                     startdate: moment(Date.now()).subtract(7, 'days').format('YYYY-MM-DD'),
                     enddate: moment(Date.now()).format('YYYY-MM-DD')
                 });
@@ -104,7 +104,7 @@ module.exports = function(app, passport) {
 
                 res.render('wmasensorbattery.ejs',{
                     sensor: sensor,
-                    sensorlogs: sensorlogs.reverse(),
+                    sensorlogs: sensorlogs,
                     startdate: moment(Date.now()).subtract(7, 'days').format('YYYY-MM-DD'),
                     enddate: moment(Date.now()).format('YYYY-MM-DD')
                 });
