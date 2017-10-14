@@ -81,8 +81,8 @@ app.post('/wma',function(req,res) {
 		if (parsedBody.chipId && parsedBody.status){
 			var chipId = parsedBody.chipId;
 			var value1 = parsedBody.v1 + rebootOffset;
-			var value2 = parsedBody.v2/100;
-			var value3 = parsedBody.v3;
+			var value2 = parsedBody.v2;
+			var value3 = parsedBody.v3 /10;
 			var status = parsedBody.status;
 			var currentDate = Date();
 			var logNow = new Sensorlog({
@@ -104,7 +104,7 @@ app.post('/wma',function(req,res) {
 			if (sensorres.pbnotify && sensorres.pbid != ""){
             	console.log(sensorres.pbid);
             	var pusher = new PushBullet(sensorres.pbid);
-            	pusher.note('', sensorres.name, parsedBody.status + '! Water usage = ' + parsedBody.v1 + ' liter @ Temperature = ' + parsedBody.v2/100 +'°C', function(error, response) {
+            	pusher.note('', sensorres.name, parsedBody.status + '! Water usage = ' + parsedBody.v1 + ' liter @ Temperature = ' + parsedBody.v2 +'°C', function(error, response) {
 					console.log(response); 
 				});
             }
